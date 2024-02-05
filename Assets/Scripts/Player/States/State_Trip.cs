@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class State_Trip : PlayerState
 {
+    private float timeElapsed;
     public State_Trip(PlayerBehaviour playerNew){
         player = playerNew;
     }
@@ -12,11 +13,18 @@ public class State_Trip : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if(timeElapsed > player.getupDuration){
+            player.SetPlayerState(new State_Stand(player));
+        }
+        timeElapsed += Time.deltaTime;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        RecoverBalance(0.25f);
     }
 
     

@@ -15,6 +15,8 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector2 balance;
     public Transform plumbBob;
     public Transform plumbBobRoot;
+    public PhysicMaterial groundFriction;
+    public PhysicMaterial airFriction;
 
     [Header("player stats")]
     private PlayerState currentPlayerState;
@@ -23,10 +25,11 @@ public class PlayerBehaviour : MonoBehaviour
     public float maxRunSpeed;
     public float jumpSpeed;
     public float jumpDuration;
+    public float getupDuration;
+
+    [Header("player bools")]
     public bool grounded;
     public bool jumping;
-    public PhysicMaterial groundFriction;
-    public PhysicMaterial airFriction;
 
     // Start is called before the first frame update
     private void Start()
@@ -55,7 +58,8 @@ public class PlayerBehaviour : MonoBehaviour
         //set plumb bob rotation. might move this to a different script later, we'll see
         plumbBob.eulerAngles = new Vector3(balance.x, 90, balance.y);
         plumbBobRoot.localEulerAngles = new Vector3(0, plumbBobRoot.eulerAngles.y + 4, 0);
-        if(balance.magnitude > 80){ SetPlayerState(new State_Trip(this)); }
+     
+        balance = Vector2.ClampMagnitude(balance, 100);
 
         currentPlayerState.Update();
     }
@@ -67,7 +71,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetPlayerState(PlayerState currentPlayerStateNew)
     {
-        //print(currentPlayerState + " -> " + currentPlayerStateNew);
+        print(currentPlayerState + " -> " + currentPlayerStateNew);
 
         currentPlayerState?.OnExitState();
 

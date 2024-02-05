@@ -5,6 +5,7 @@ using UnityEngine;
 public class State_Jump : PlayerState
 {
     private float jumpTimeElapsed;
+    private Vector2 balanceBuildup;
 
     public State_Jump(PlayerBehaviour playerNew){
         player = playerNew;
@@ -35,7 +36,10 @@ public class State_Jump : PlayerState
             player.rb.AddForce(player.orientation.up * player.jumpSpeed, ForceMode.Impulse);
         }
 
+        balanceBuildup += player.balance += new Vector2(player.movementInput.x, player.movementInput.z).normalized * 0.05f;
+
         if(player.grounded && jumpTimeElapsed >= player.jumpDuration){
+            player.balance += balanceBuildup;
             player.SetPlayerState(new State_Stumble(player, jumpTimeElapsed * 2));
         }
     }

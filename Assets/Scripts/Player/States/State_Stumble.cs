@@ -19,13 +19,21 @@ public class State_Stumble : PlayerState
     {
         base.Update();
 
-        if(stumbleElapsed < stumbleDuration){
+        if(player.jumping){
+            player.SetPlayerState(new State_Jump(player));
+        }
+        else if(stumbleElapsed < stumbleDuration){
             if(player.grounded){
                 stumbleElapsed += Time.deltaTime;
             }
         }
         else{
-            player.SetPlayerState(new State_Stand(player));
+            if(player.balance.magnitude > 90){
+                player.SetPlayerState(new State_Trip(player)); 
+            }
+            else{
+                player.SetPlayerState(new State_Stand(player));
+            }
         }
     }
 
@@ -37,7 +45,7 @@ public class State_Stumble : PlayerState
 
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
-        player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized;
+        player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.25f;
         player.balance += new Vector2(player.movementInput.x, player.movementInput.z).normalized;
     }
 

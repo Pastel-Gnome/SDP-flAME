@@ -179,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4320354}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -7, y: 6.5, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1218,7 +1218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956413433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3197614, y: -0.000000016303012, z: 0.000000005501936, w: 0.94749814}
+  m_LocalRotation: {x: 0.3197614, y: 0.000000016303012, z: -0.000000005501936, w: 0.94749814}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1380,7 +1380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064234377}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29249287, y: -0.000000016453907, z: 0.000000005032744, w: 0.9562677}
+  m_LocalRotation: {x: 0.29249287, y: 0.000000016453908, z: -0.0000000050327444, w: 0.9562677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1696,7 +1696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273801713}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31976146, y: -0.000000032606025, z: 0.000000011003874, w: 0.9474981}
+  m_LocalRotation: {x: 0.31976146, y: 0.000000032606025, z: -0.000000011003874, w: 0.9474981}
   m_LocalPosition: {x: 0, y: 7, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1811,15 +1811,16 @@ MonoBehaviour:
   balance: {x: 0, y: 0}
   plumbBob: {fileID: 4320358}
   plumbBobRoot: {fileID: 2144060340}
+  groundFriction: {fileID: 13400000, guid: 3a8180f7db2c77145a87f4f47f671d24, type: 2}
+  airFriction: {fileID: 13400000, guid: dd20cbcfb2a7ee84aa24d770b91c7b98, type: 2}
   balanceRecoverRate: 1
   runSpeed: 60
   maxRunSpeed: 5
   jumpSpeed: 1.25
   jumpDuration: 0.2
+  getupDuration: 1
   grounded: 0
   jumping: 0
-  groundFriction: {fileID: 13400000, guid: 3a8180f7db2c77145a87f4f47f671d24, type: 2}
-  airFriction: {fileID: 13400000, guid: dd20cbcfb2a7ee84aa24d770b91c7b98, type: 2}
 --- !u!54 &1283839595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2520,7 +2521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649598684}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.34694627, y: -1e-45, z: -0, w: 0.93788505}
+  m_LocalRotation: {x: 0.34694627, y: 3e-45, z: -1e-45, w: 0.93788505}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
