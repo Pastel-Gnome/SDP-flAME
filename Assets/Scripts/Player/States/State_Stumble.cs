@@ -45,7 +45,7 @@ public class State_Stumble : PlayerState
 
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
-        player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.25f;
+        player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.1f;
         player.balance += new Vector2(player.movementInput.x, player.movementInput.z).normalized;
     }
 
