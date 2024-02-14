@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class State_Base : PlayerState
 {
-
-    public State_Base(PlayerBehaviour playerNew){
-        player = playerNew;
+    public State_Base(PlayerBehaviour playerNew) : base(playerNew){
     }
 
-    // Update is called once per frame
+    public override void Chosen(){
+        PlayerTransition[] transitionsNew = {
+        };
+        transitions = transitionsNew;
+    }
+
     public override void Update()
     {
         base.Update();
@@ -19,7 +22,6 @@ public class State_Base : PlayerState
     {
         base.FixedUpdate();
     }
-
     
     public override void OnEnterState()
     {

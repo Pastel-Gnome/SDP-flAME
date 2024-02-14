@@ -7,11 +7,16 @@ public class State_Jump : PlayerState
     private float jumpTimeElapsed;
     private Vector2 balanceBuildup;
 
-    public State_Jump(PlayerBehaviour playerNew){
-        player = playerNew;
+    public State_Jump(PlayerBehaviour playerNew) : base(playerNew){
     }
 
-    // Update is called once per frame
+    public override void Chosen(){
+        PlayerTransition[] transitionsNew = {
+            new Transition_Landing(player, new State_Stumble(player, jumpTimeElapsed * 2, new Vector3(player.rb.velocity.x, 0, player.rb.velocity.z)))
+        };
+        transitions = transitionsNew;
+    }
+
     public override void Update()
     {
         base.Update();
@@ -36,12 +41,7 @@ public class State_Jump : PlayerState
             player.rb.AddForce(player.orientation.up * player.jumpSpeed, ForceMode.Impulse);
         }
 
-        balanceBuildup += player.balance += new Vector2(player.movementInput.x, player.movementInput.z).normalized * 0.05f;
-
-        if(player.grounded && jumpTimeElapsed >= player.jumpDuration){
-            player.balance += balanceBuildup;
-            player.SetPlayerState(new State_Stumble(player, jumpTimeElapsed * 2));
-        }
+        balanceBuildup += new Vector2(player.movementInput.x, player.movementInput.z).normalized * 0.05f;
     }
 
     public override void OnEnterState()
@@ -56,6 +56,8 @@ public class State_Jump : PlayerState
 
     public override void OnExitState()
     {
+        player.balance += balanceBuildup;
+
         base.OnExitState();
     }
 }

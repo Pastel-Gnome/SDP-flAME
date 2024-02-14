@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class State_Stand : PlayerState
 {
-    public State_Stand(PlayerBehaviour playerNew){
-        player = playerNew;
+    public State_Stand(PlayerBehaviour playerNew) : base(playerNew){
     }
 
-    // Update is called once per frame
+    public override void Chosen(){
+        PlayerTransition[] transitionsNew = {
+            new Transition_Movement(player, new State_Run(player)),
+            new Transition_Jumping(player, new State_Jump(player)),
+            new Transition_Grabbing(player, new State_Grab(player)),
+            new Transition_Balance(player, new State_Trip(player, player.getupDuration), 90)
+        };
+        transitions = transitionsNew;
+    }
+
     public override void Update()
     {
         base.Update();
-
-        if(player.movementInput != Vector3.zero){
-            player.SetPlayerState(new State_Run(player));
-        }
-        else if(player.jumping){
-            player.SetPlayerState(new State_Jump(player));
-        }
-        else if(player.jumping){
-            player.SetPlayerState(new State_Jump(player));
-        }
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
 
-        RecoverBalance();
-        //player.balance = Vector3.Slerp(player.balance, Vector2.zero, 0.25f);
+        player.RecoverBalance();
     }
 
     public override void OnEnterState()

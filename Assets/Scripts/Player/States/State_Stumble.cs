@@ -4,37 +4,25 @@ using UnityEngine;
 
 public class State_Stumble : PlayerState
 {
-    private float stumbleDuration = 0.5f;
-    private float stumbleElapsed = 0;
+    private float duration = 0.5f;
     private Vector3 stumbleInput;
 
-    public State_Stumble(PlayerBehaviour playerNew, float stumbleDurationNew){
-        player = playerNew;
-        stumbleInput = new Vector3(player.rb.velocity.x, 0, player.rb.velocity.z);
-        stumbleDuration = stumbleDurationNew;
+    public State_Stumble(PlayerBehaviour playerNew, float durationNew, Vector3 stumbleInputNew) : base(playerNew){
+        duration = durationNew;
+        stumbleInput = stumbleInputNew;
     }
 
-    // Update is called once per frame
+    public override void Chosen(){
+        PlayerTransition[] transitionsNew = {
+            new Transition_Jumping(player, new State_Jump(player)),
+            new Transition_Timer(player, new State_Stand(player), duration)
+        };
+        transitions = transitionsNew;
+    }
+
     public override void Update()
     {
         base.Update();
-
-        if(player.jumping){
-            player.SetPlayerState(new State_Jump(player));
-        }
-        else if(stumbleElapsed < stumbleDuration){
-            if(player.grounded){
-                stumbleElapsed += Time.deltaTime;
-            }
-        }
-        else{
-            if(player.balance.magnitude > 90){
-                player.SetPlayerState(new State_Trip(player)); 
-            }
-            else{
-                player.SetPlayerState(new State_Stand(player));
-            }
-        }
     }
 
     public override void FixedUpdate()
@@ -42,7 +30,6 @@ public class State_Stumble : PlayerState
         base.FixedUpdate();
 
         player.rb.AddForce(stumbleInput);
-
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
         player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.1f;

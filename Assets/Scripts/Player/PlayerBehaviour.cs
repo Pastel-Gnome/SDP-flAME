@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     [Header("public variables")]
+    public Transform CarryAnchorpoint;
     public LayerMask groundMask;
-    public LayerMask lampMask;
+    public LayerMask holdableMask;
     public Holdable heldObject;
     public float grabRadius;
     public Rigidbody rb;
@@ -29,15 +31,18 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpSpeed;
     public float jumpDuration;
     public float getupDuration;
+    public float grabTime;
 
     [Header("player bools")]
     public bool grounded;
     public bool jumping;
+    public bool grabbing;
 
     // Start is called before the first frame update
     private void Start()
     {
         currentPlayerState = new State_Stand(this);
+        currentPlayerState.Chosen();
     }
 
     // Update is called once per frame
@@ -54,17 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
         if(Input.GetButtonDown("Jump") && grounded){ jumping = true; }
 
         //pick up lantern
-        if(Input.GetButtonDown("Grab")){
-            Transform closestGrab = null;
-            Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, lampMask);
-            foreach(Collider i in grabHits){
-                if(closestGrab == null || Vector3.Distance(i.transform.position, orientation.position) < Vector3.Distance(closestGrab.position, orientation.position)){
-                    closestGrab = i.transform;
-                }
-            }
-            heldObject = closestGrab.GetComponent<Holdable>();
-            heldObject.gameObject.layer = 2;
-        }
+        if(Input.GetButtonDown("Grab")){ grabbing = true; }
 
         //clamp horizontal speed
         Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -100,5 +95,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetColliderMaterial(PhysicMaterial newPhysicsMaterial){
         capsuleCollider.material = newPhysicsMaterial;
+    }
+
+    public void RecoverBalance(float recoveryMod = 1){
+        balance = new Vector2(
+            balance.x > 0.2 ? balance.x - balanceRecoverRate : balance.x + balanceRecoverRate, 
+            balance.y > 0.2 ? balance.y - balanceRecoverRate : balance.y + balanceRecoverRate
+        );
+
+        //player.balance = Vector3.Slerp(player.balance, Vector2.zero, player.balanceRecoverRate * recoveryMod);
+        //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
     }
 }

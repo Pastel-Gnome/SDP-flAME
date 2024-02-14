@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class State_Trip : PlayerState
-{
-    private float timeElapsed;
-    public State_Trip(PlayerBehaviour playerNew){
-        player = playerNew;
+{ 
+    private float duration;
+    public State_Trip(PlayerBehaviour playerNew, float durationNew) : base(playerNew){
+        duration = durationNew;
     }
 
-    // Update is called once per frame
+    public override void Chosen(){
+        PlayerTransition[] transitionsNew = {
+            new Transition_Timer(player, new State_Stand(player), duration)
+        };
+        transitions = transitionsNew;
+    }
+
     public override void Update()
     {
         base.Update();
-
-        if(timeElapsed > player.getupDuration){
-            player.SetPlayerState(new State_Stand(player));
-        }
-        timeElapsed += Time.deltaTime;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
 
-        RecoverBalance(0.25f);
+        player.RecoverBalance(0.25f);
     }
 
     

@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class Holdable : MonoBehaviour
 {
-    public Rigidbody rb;
-    
+    private Rigidbody rb;
+    public Transform holder;
 
     // Start is called before the first frame update
     void Start()
     {
-        TryGetComponent(out Rigidbody rbNew);
-        rb = rbNew;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if(holder){
+            transform.SetPositionAndRotation(holder.position, holder.rotation);
+        }
+    }
+
+    public virtual void grabbed(Transform holderNew){
+        holder = holderNew;
+        gameObject.layer = 2;
+    }
+
+    public virtual void dropped(){
+        holder = null;
+        gameObject.layer = 7;
     }
 }

@@ -4,36 +4,34 @@ using UnityEngine;
 
 public class PlayerState
 {
-    private Vector2 balanceRecoveryVelocity = Vector2.zero;
+    protected PlayerTransition[] transitions = {};
+    public PlayerBehaviour player;
 
-    protected PlayerBehaviour player;
+    public virtual void Chosen(){
+    }
 
-    // Update is called once per frame
-    virtual public void Update()
-    {
+    protected PlayerState(PlayerBehaviour playerNew){
+        player = playerNew;
     }
 
     // Update is called once per frame
-    virtual public void FixedUpdate()
+    public virtual void Update()
+    {
+        foreach(PlayerTransition i in transitions){
+            i.Transition();
+        }
+    }
+
+    // Update is called once per frame
+    public virtual void FixedUpdate()
     {
     }
 
-    virtual public void OnEnterState()
+    public virtual void OnEnterState()
     {
     }
 
-    virtual public void OnExitState()
+    public virtual void OnExitState()
     {
-    }
-
-    protected void RecoverBalance(float recoveryMod = 1){
-        player.balance = new Vector2(
-            player.balance.x > 0.2 ? player.balance.x - player.balanceRecoverRate : player.balance.x + player.balanceRecoverRate, 
-            player.balance.y > 0.2 ? player.balance.y - player.balanceRecoverRate : player.balance.y + player.balanceRecoverRate
-        );
-
-        //player.balance = Vector3.Slerp(player.balance, Vector2.zero, player.balanceRecoverRate * recoveryMod);
-
-        //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
     }
 }
