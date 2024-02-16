@@ -24,10 +24,12 @@ public class Holdable : MonoBehaviour
     public virtual void grabbed(Transform holderNew){
         holder = holderNew;
         gameObject.layer = 2;
+        rb.useGravity = false;
     }
 
     public virtual void dropped(){
         holder = null;
         gameObject.layer = 7;
+        rb.useGravity = true;
     }
 }

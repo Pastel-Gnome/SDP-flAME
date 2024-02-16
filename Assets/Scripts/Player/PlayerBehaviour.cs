@@ -15,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Rigidbody rb;
     public Animator animator;
     public Transform orientation;
+    public Transform placePosition;
     public Collider capsuleCollider;
     public Vector3 movementInput;
     public Vector2 balance;

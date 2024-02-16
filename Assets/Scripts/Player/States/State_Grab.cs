@@ -33,8 +33,9 @@ public class State_Grab : PlayerState
 
         if(player.heldObject){
             player.heldObject.dropped();
+            player.heldObject.transform.SetPositionAndRotation(player.placePosition.position, Quaternion.identity);
             player.heldObject = null;
-        }
+        } else { 
 
         Transform closestGrab = null;
         Collider[] grabHits = Physics.OverlapSphere(player.orientation.position, player.grabRadius, player.holdableMask);
@@ -48,7 +49,8 @@ public class State_Grab : PlayerState
             player.heldObject = closestGrab.GetComponent<Holdable>();
             player.heldObject.grabbed(player.CarryAnchorpoint);
         }
-    }
+		}
+	}
 
     public override void OnExitState()
     {
