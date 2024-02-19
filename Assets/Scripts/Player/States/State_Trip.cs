@@ -34,6 +34,8 @@ public class State_Trip : PlayerState
         base.OnEnterState();
 
         player.animator.Play("Trip");
+
+        player.Drop(false, player.rb.velocity);
     }
 
     public override void OnExitState()
