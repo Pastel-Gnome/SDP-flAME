@@ -27,8 +27,9 @@ public class Holdable : MonoBehaviour
         gameObject.layer = 2;
     }
 
-    public virtual void dropped(){
+    public virtual void dropped(Vector3 exitForce){
         rb.isKinematic = false;
+        rb.AddForce(exitForce);
         holder = null;
         gameObject.layer = 7;
     }

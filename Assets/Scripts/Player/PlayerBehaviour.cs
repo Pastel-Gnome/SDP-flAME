@@ -132,7 +132,7 @@ public class PlayerBehaviour : MonoBehaviour
         Transform droppedObject = null;
 
         if(heldObject){
-            heldObject.dropped();
+            heldObject.dropped(exitForce);
             droppedObject = heldObject.transform;
             heldObject = null;
         }
