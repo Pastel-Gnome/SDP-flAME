@@ -31,23 +31,9 @@ public class State_Grab : PlayerState
 
         player.grabbing = false;
 
-        if(player.heldObject){
-            player.heldObject.dropped();
-            player.heldObject = null;
-        }
+        Transform droppedObject = player.Drop(true, Vector3.zero);
 
-        Transform closestGrab = null;
-        Collider[] grabHits = Physics.OverlapSphere(player.orientation.position, player.grabRadius, player.holdableMask);
-        foreach(Collider i in grabHits){
-            if(closestGrab == null || Vector3.Distance(i.transform.position, player.orientation.position) < Vector3.Distance(closestGrab.position, player.orientation.position)){
-                closestGrab = i.transform;
-            }
-        }
-
-        if(closestGrab){
-            player.heldObject = closestGrab.GetComponent<Holdable>();
-            player.heldObject.grabbed(player.CarryAnchorpoint);
-        }
+        player.Grab(droppedObject);
     }
 
     public override void OnExitState()

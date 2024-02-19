@@ -78,8 +78,6 @@ public class PlayerBehaviour : MonoBehaviour
     private void FixedUpdate() 
     {
         currentPlayerState.FixedUpdate();
-
-        if(heldObject){heldObject.transform.position = orientation.position;}
     }
 
     public void SetPlayerState(PlayerState currentPlayerStateNew)
@@ -105,5 +103,40 @@ public class PlayerBehaviour : MonoBehaviour
 
         //player.balance = Vector3.Slerp(player.balance, Vector2.zero, player.balanceRecoverRate * recoveryMod);
         //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
+    }
+
+    public void Grab(Transform droppedObject){
+
+        Transform closestGrab = null;
+        Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, holdableMask);
+        foreach(Collider i in grabHits){
+            if((closestGrab == null || Vector3.Distance(i.transform.position, orientation.position) < Vector3.Distance(closestGrab.position, orientation.position)) && i.transform != droppedObject){
+                closestGrab = i.transform;
+            }
+        }
+
+        if(closestGrab){
+            heldObject = closestGrab.GetComponent<Holdable>();
+            heldObject.grabbed(CarryAnchorpoint);
+        }
+
+        if(heldObject != null){
+            animator.Play("Arms-Carry", 1);
+        }
+        else{
+            animator.Play("Arms-Idle", 1);
+        }
+    }
+
+    public Transform Drop(bool placed, Vector3 exitForce){
+        Transform droppedObject = null;
+
+        if(heldObject){
+            heldObject.dropped();
+            droppedObject = heldObject.transform;
+            heldObject = null;
+        }
+
+        return droppedObject;
     }
 }

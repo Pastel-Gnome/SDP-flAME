@@ -22,11 +22,13 @@ public class Holdable : MonoBehaviour
     }
 
     public virtual void grabbed(Transform holderNew){
+        rb.isKinematic = true;
         holder = holderNew;
         gameObject.layer = 2;
     }
 
     public virtual void dropped(){
+        rb.isKinematic = false;
         holder = null;
         gameObject.layer = 7;
     }
