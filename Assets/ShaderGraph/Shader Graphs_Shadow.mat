@@ -40,8 +40,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Intensity: 10
+    - _Range: 20
     m_Colors:
+    - _Darkness_Color: {r: 0.1441077, g: 0.1327731, b: 0.31698087, a: 1}
+    - _Lantern_Position: {r: 0, g: 0, b: 0, a: 0}
     - _Vector3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5501928516545460624

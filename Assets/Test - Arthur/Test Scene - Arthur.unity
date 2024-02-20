@@ -394,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 218351806}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0.6731243, y: 2.7584176, z: -0.86789346}
+  m_LocalPosition: {x: 0.67312443, y: 2.7584174, z: -0.86789334}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1133,7 +1133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956413433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3197614, y: 0.000000016303012, z: -0.000000005501936, w: 0.94749814}
+  m_LocalRotation: {x: 0.3197614, y: -0.000000016303012, z: 0.000000005501936, w: 0.94749814}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1212,7 +1212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064234377}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29249287, y: -0.000000016453908, z: 0.0000000050327444, w: 0.9562677}
+  m_LocalRotation: {x: 0.29249287, y: 0.000000016453908, z: -0.0000000050327444, w: 0.9562677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1551,7 +1551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273801713}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31976146, y: 0.000000032606025, z: -0.000000011003874, w: 0.9474981}
+  m_LocalRotation: {x: 0.31976146, y: -0.000000032606025, z: 0.000000011003874, w: 0.9474981}
   m_LocalPosition: {x: 0, y: 8.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1622,14 +1622,15 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
+  m_Cameras:
+  - {fileID: 1997908672}
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2704,11 +2705,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
+  m_RequiresDepthTextureOption: 0
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
+  m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 32
@@ -2719,7 +2720,7 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
-  m_ClearDepth: 1
+  m_ClearDepth: 0
   m_AllowXRRendering: 1
   m_AllowHDROutput: 1
   m_UseScreenCoordOverride: 0
@@ -3064,10 +3065,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 423236844}
   - {fileID: 1452891438}
+  - {fileID: 218351809}
   - {fileID: 2090138878202406232}
   - {fileID: 1271407142}
   - {fileID: 1733811619}
   - {fileID: 545010436}
   - {fileID: 6364739968964407710}
   - {fileID: 652200675}
-  - {fileID: 218351809}
