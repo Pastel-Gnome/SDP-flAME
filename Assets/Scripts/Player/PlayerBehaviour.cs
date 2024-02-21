@@ -118,7 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if(closestGrab){
             heldObject = closestGrab.GetComponent<Holdable>();
-            heldObject.grabbed(CarryAnchorpoint);
+            heldObject.grabbed(CarryAnchorpoint, false);
         }
 
         if(heldObject != null){
