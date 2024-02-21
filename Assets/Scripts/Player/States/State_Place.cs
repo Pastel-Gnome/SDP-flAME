@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_Grab : PlayerState
+public class State_Place : PlayerState
 {
-    public State_Grab(PlayerBehaviour playerNew) : base(playerNew){
+    public State_Place(PlayerBehaviour playerNew) : base(playerNew){
     }
 
     public override void Chosen(){
@@ -30,11 +30,12 @@ public class State_Grab : PlayerState
         base.OnEnterState();
 
         player.grabbing = false;
-        player.Grab();
     }
 
     public override void OnExitState()
     {
         base.OnExitState();
+
+        player.Drop(true, Vector3.zero);
     }
 }

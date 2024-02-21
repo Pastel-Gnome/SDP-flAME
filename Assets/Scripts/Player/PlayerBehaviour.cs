@@ -106,12 +106,12 @@ public class PlayerBehaviour : MonoBehaviour
         //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
     }
 
-    public void Grab(Transform droppedObject){
+    public void Grab(){
 
         Transform closestGrab = null;
         Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, holdableMask);
         foreach(Collider i in grabHits){
-            if((closestGrab == null || Vector3.Distance(i.transform.position, orientation.position) < Vector3.Distance(closestGrab.position, orientation.position)) && i.transform != droppedObject){
+            if(closestGrab == null || Vector3.Distance(i.transform.position, orientation.position) < Vector3.Distance(closestGrab.position, orientation.position)){
                 closestGrab = i.transform;
             }
         }
@@ -124,9 +124,6 @@ public class PlayerBehaviour : MonoBehaviour
         if(heldObject != null){
             animator.Play("Arms-Carry", 1);
         }
-        else{
-            animator.Play("Arms-Idle", 1);
-        }
     }
 
     public Transform Drop(bool placed, Vector3 exitForce){
@@ -137,6 +134,8 @@ public class PlayerBehaviour : MonoBehaviour
             droppedObject = heldObject.transform;
             heldObject = null;
         }
+        
+        animator.Play("Arms-Idle", 1);
 
         return droppedObject;
     }
