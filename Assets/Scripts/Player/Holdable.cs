@@ -7,6 +7,8 @@ public class Holdable : MonoBehaviour
     private Rigidbody rb;
     public Transform holder;
 
+    private bool canBeGrabbed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +23,12 @@ public class Holdable : MonoBehaviour
         }
     }
 
-    public virtual void grabbed(Transform holderNew){
+    public virtual void grabbed(Transform holderNew, bool canBeGrabbedNew){
+        canBeGrabbed = canBeGrabbedNew;
         rb.isKinematic = true;
         holder = holderNew;
-        gameObject.layer = 2;
+        if (!canBeGrabbed) { gameObject.layer = 2; }
+        else { gameObject.layer = 7; }
         rb.useGravity = false;
     }
 
@@ -35,4 +39,14 @@ public class Holdable : MonoBehaviour
         gameObject.layer = 7;
         rb.useGravity = true;
     }
+
+    public virtual void grabbedNoLight(Transform placeNew, bool canBeGrabbedNew)
+    {
+		canBeGrabbed = canBeGrabbedNew;
+		rb.isKinematic = true;
+		transform.SetPositionAndRotation(placeNew.position, placeNew.rotation);
+		if (!canBeGrabbed) { gameObject.layer = 2; }
+		else { gameObject.layer = 7; }
+		rb.useGravity = false;
+	}
 }
