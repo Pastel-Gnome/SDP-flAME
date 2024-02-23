@@ -6,7 +6,6 @@ public class LanternBehavior : MonoBehaviour
 {
 
     private bool isPlaced = false;
-
     private Holdable lantern;
 
     void Start()
@@ -20,7 +19,7 @@ public class LanternBehavior : MonoBehaviour
         {
             if (other.CompareTag("Holster"))
             {
-				lantern.grabbedNoLight(other.transform.parent, true);
+				lantern.grabbed(other.transform.parent, true);
 			} else if (other.CompareTag("Pedestal"))
 			{
 				lantern.grabbed(other.transform.parent, true);

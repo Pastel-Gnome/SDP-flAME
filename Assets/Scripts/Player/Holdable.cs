@@ -6,6 +6,7 @@ public class Holdable : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform holder;
+    [SerializeField] private Vector3 centerOfMass;
 
     private bool canBeGrabbed;
 
@@ -13,6 +14,7 @@ public class Holdable : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass;
     }
 
     // Update is called once per frame
@@ -39,14 +41,4 @@ public class Holdable : MonoBehaviour
         gameObject.layer = 7;
         rb.useGravity = true;
     }
-
-    public virtual void grabbedNoLight(Transform placeNew, bool canBeGrabbedNew)
-    {
-		canBeGrabbed = canBeGrabbedNew;
-		rb.isKinematic = true;
-		transform.SetPositionAndRotation(placeNew.position, placeNew.rotation);
-		if (!canBeGrabbed) { gameObject.layer = 2; }
-		else { gameObject.layer = 7; }
-		rb.useGravity = false;
-	}
 }

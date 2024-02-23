@@ -17,8 +17,6 @@ public class State_Grab : PlayerState
     public override void Update()
     {
         base.Update();
-
-        player.animator.transform.forward = Vector3.Slerp(player.animator.transform.forward, player.movementInput, Time.deltaTime * 7);
     }
 
     public override void FixedUpdate()

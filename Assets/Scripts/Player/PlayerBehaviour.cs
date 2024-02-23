@@ -108,6 +108,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public IEnumerator Grab(float delay = 0){
         yield return new WaitForSeconds(delay);
+
         Transform closestGrab = null;
         Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, holdableMask);
         foreach(Collider i in grabHits){
@@ -121,18 +122,15 @@ public class PlayerBehaviour : MonoBehaviour
             heldObject.grabbed(CarryAnchorpoint, false);
         }
 
-        if(heldObject != null){
-            animator.Play("Arms-Carry", 1);
-        }
+        animator.SetBool("Carrying", heldObject);
     }
 
     public IEnumerator Drop(bool placed, Vector3 exitForce, float delay = 0){
         yield return new WaitForSeconds(delay);
+
         if(heldObject){
             heldObject.dropped(exitForce);
             heldObject = null;
         }
-        
-        animator.Play("Arms-Idle", 1);
     }
 }

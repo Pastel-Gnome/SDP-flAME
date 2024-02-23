@@ -29,7 +29,7 @@ public class State_Place : PlayerState
     {
         base.OnEnterState();
 
-        player.animator.Play("Arms-Grab", 1);
+        player.animator.Play("Arms-Place", 1);
         player.StartCoroutine(player.Drop(true, Vector3.zero, player.grabTime * 0.5f));
         
         player.grabbing = false;
