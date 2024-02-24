@@ -106,7 +106,8 @@ public class PlayerBehaviour : MonoBehaviour
         //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
     }
 
-    public void Grab(){
+    public IEnumerator Grab(float delay = 0){
+        yield return new WaitForSeconds(delay);
 
         Transform closestGrab = null;
         Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, holdableMask);
@@ -118,25 +119,18 @@ public class PlayerBehaviour : MonoBehaviour
 
         if(closestGrab){
             heldObject = closestGrab.GetComponent<Holdable>();
-            heldObject.grabbed(CarryAnchorpoint);
+            heldObject.grabbed(CarryAnchorpoint, false);
         }
 
-        if(heldObject != null){
-            animator.Play("Arms-Carry", 1);
-        }
+        animator.SetBool("Carrying", heldObject);
     }
 
-    public Transform Drop(bool placed, Vector3 exitForce){
-        Transform droppedObject = null;
+    public IEnumerator Drop(bool placed, Vector3 exitForce, float delay = 0){
+        yield return new WaitForSeconds(delay);
 
         if(heldObject){
             heldObject.dropped(exitForce);
-            droppedObject = heldObject.transform;
             heldObject = null;
         }
-        
-        animator.Play("Arms-Idle", 1);
-
-        return droppedObject;
     }
 }

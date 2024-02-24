@@ -22,6 +22,8 @@ public class State_Grab : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        player.rb.AddForce(player.movementInput.normalized * (player.runSpeed * 0.5f) * (player.grounded ? 1 : 0.25f), ForceMode.Force);
     }
 
     
@@ -29,8 +31,9 @@ public class State_Grab : PlayerState
     {
         base.OnEnterState();
 
+        player.animator.Play("Arms-Grab", 1);
         player.grabbing = false;
-        player.Grab();
+        player.StartCoroutine(player.Grab(player.grabTime * 0.5f));
     }
 
     public override void OnExitState()
