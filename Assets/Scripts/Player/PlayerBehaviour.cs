@@ -33,6 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpDuration;
     public float getupDuration;
     public float grabTime;
+    public float shadowLevel;
 
     [Header("player bools")]
     public bool grounded;
@@ -49,6 +50,9 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //
+        //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
+
         //check if player is grounded
         bool groundedNew = Physics.Raycast(orientation.position, -orientation.up, 1.25f, groundMask);
         grounded = groundedNew;
