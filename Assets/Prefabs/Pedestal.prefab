@@ -48,6 +48,7 @@ MonoBehaviour:
   currentRange: 1
   maxRange: 1
   decay: 0
+  holdable: {fileID: 0}
 --- !u!1 &7818621967327896979
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,7 +62,7 @@ GameObject:
   - component: {fileID: 5357533046093856620}
   - component: {fileID: 5060987957160463851}
   - component: {fileID: 1438520187579520816}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: root
   m_TagString: Pedestal
   m_Icon: {fileID: 0}
@@ -146,7 +147,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -164,14 +165,14 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1.5, z: 0}
