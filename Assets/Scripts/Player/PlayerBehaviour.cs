@@ -34,11 +34,14 @@ public class PlayerBehaviour : MonoBehaviour
     public float getupDuration;
     public float grabTime;
     public float shadowLevel;
+    public float maxShadowTime = -999;
+    public float shadowTimer;
 
     [Header("player bools")]
     public bool grounded;
     public bool jumping;
     public bool grabbing;
+    public bool isLit;
 
     // Start is called before the first frame update
     private void Start()
@@ -50,6 +53,13 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (!isLit && maxShadowTime != -999 && shadowTimer > 0)
+        {
+            shadowTimer -= Time.deltaTime;
+            if (shadowTimer <= 0) { Debug.Log("Player has been in darkness too long. Game Over"); shadowTimer = 0; }
+        } else if (isLit && shadowTimer < maxShadowTime && shadowTimer != 0) {
+			shadowTimer += Time.deltaTime;
+		}
         //
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 

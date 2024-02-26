@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 6736387194679545334}
   - component: {fileID: 6028115265115772192}
   - component: {fileID: 915577456819963461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: root
   m_TagString: Holster
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -165,10 +165,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
