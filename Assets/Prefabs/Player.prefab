@@ -1097,9 +1097,13 @@ MonoBehaviour:
   jumpDuration: 0.2
   getupDuration: 1
   grabTime: 0
+  shadowLevel: 0
+  maxShadowTime: -999
+  shadowTimer: 0
   grounded: 0
   jumping: 0
   grabbing: 0
+  isLit: 0
 --- !u!136 &3974624193622179629
 CapsuleCollider:
   m_ObjectHideFlags: 0
