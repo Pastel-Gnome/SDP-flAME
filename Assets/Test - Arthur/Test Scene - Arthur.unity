@@ -227,6 +227,7 @@ MonoBehaviour:
   currentRange: 5
   maxRange: 0
   decay: 0
+  holdable: {fileID: 0}
 --- !u!1 &218351806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2122,6 +2123,7 @@ MonoBehaviour:
   currentRange: 10
   maxRange: 0
   decay: 0
+  holdable: {fileID: 0}
 --- !u!4 &1863050010 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7709107149264205887, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
@@ -2223,6 +2225,14 @@ PrefabInstance:
     - target: {fileID: 3067532599649949164, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: jumpSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3067532599649949164, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
+      propertyPath: shadowTimer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3067532599649949164, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
+      propertyPath: maxShadowTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3355835791318702880, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalRotation.w

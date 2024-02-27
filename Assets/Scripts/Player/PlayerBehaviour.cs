@@ -33,7 +33,6 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpDuration;
     public float getupDuration;
     public float grabTime;
-    public float shadowLevel;
     public float maxShadowTime = -999;
     public float shadowTimer;
 
