@@ -41,4 +41,9 @@ public class Holdable : MonoBehaviour
         gameObject.layer = 7;
         rb.useGravity = true;
     }
+
+    public bool GetGrabAbility()
+    {
+        return canBeGrabbed;
+    }
 }
