@@ -16,8 +16,8 @@ public class SaveData
     }
 
 	public string sceneName;
-	public int checkpoint;
-    public Quaternion playerRotation;
+	public int checkpoint = -99;
+    public Quaternion playerRotation = Quaternion.identity;
 	public List<LanternData> lanternData = new List<LanternData>();
 
     public string SaveToJson()

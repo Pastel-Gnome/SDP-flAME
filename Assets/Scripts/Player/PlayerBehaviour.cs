@@ -41,6 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool jumping;
     public bool grabbing;
     public bool isLit;
+    public bool isInCutscene;
 
     // Start is called before the first frame update
     private void Start()
@@ -66,27 +67,30 @@ public class PlayerBehaviour : MonoBehaviour
         bool groundedNew = Physics.Raycast(orientation.position, -orientation.up, 1.25f, groundMask);
         grounded = groundedNew;
 
-        //get movement input
-        movementInput = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
+        if (!isInCutscene)
+        {
+            //get movement input
+            movementInput = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
 
-        //get jumping input
-        if(Input.GetButtonDown("Jump") && grounded){ jumping = true; }
+            //get jumping input
+            if (Input.GetButtonDown("Jump") && grounded) { jumping = true; }
 
-        //pick up lantern
-        if(Input.GetButtonDown("Grab")){ grabbing = true; }
+            //pick up lantern
+            if (Input.GetButtonDown("Grab")) { grabbing = true; }
 
-        //clamp horizontal speed
-        Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        horizontalVelocity = horizontalVelocity.magnitude > maxRunSpeed ? Vector3.ClampMagnitude(horizontalVelocity, maxRunSpeed) : horizontalVelocity;
-        rb.velocity = new Vector3(horizontalVelocity.x, rb.velocity.y, horizontalVelocity.z);
+            //clamp horizontal speed
+            Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            horizontalVelocity = horizontalVelocity.magnitude > maxRunSpeed ? Vector3.ClampMagnitude(horizontalVelocity, maxRunSpeed) : horizontalVelocity;
+            rb.velocity = new Vector3(horizontalVelocity.x, rb.velocity.y, horizontalVelocity.z);
 
-        //set plumb bob rotation. might move this to a different script later, we'll see
-        plumbBob.eulerAngles = new Vector3(balance.x, 90, balance.y);
-        plumbBobRoot.localEulerAngles = new Vector3(0, plumbBobRoot.eulerAngles.y + 4, 0);
-     
-        balance = Vector2.ClampMagnitude(balance, 100);
+            //set plumb bob rotation. might move this to a different script later, we'll see
+            plumbBob.eulerAngles = new Vector3(balance.x, 90, balance.y);
+            plumbBobRoot.localEulerAngles = new Vector3(0, plumbBobRoot.eulerAngles.y + 4, 0);
 
-        currentPlayerState.Update();
+            balance = Vector2.ClampMagnitude(balance, 100);
+
+            currentPlayerState.Update();
+        }
     }
 
     private void FixedUpdate() 
