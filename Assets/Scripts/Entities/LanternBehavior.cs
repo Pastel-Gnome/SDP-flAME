@@ -21,28 +21,13 @@ public class LanternBehavior : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-        if(lightSource.currentRange != 0f)
+        if(lightSource.currentRange > 0.1f)
         {
 			lightArea.radius = lightSource.currentRange + 0.5f;
 		} else
         {
             lightArea.radius = 0f;
         }
-	}
-
-	private void OnTriggerStay(Collider other)
-	{
-        if (lantern.holder == null && isPlaced == false)
-        {
-            if (other.CompareTag("Holster"))
-            {
-				lantern.grabbed(other.transform.parent, true);
-			} else if (other.CompareTag("Pedestal"))
-			{
-				lantern.grabbed(other.transform.parent, true);
-			}
-
-		}
 	}
 
 	private void OnTriggerEnter(Collider other)

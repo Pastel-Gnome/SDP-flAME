@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 923339614679511153}
-  - component: {fileID: 3921525398663019014}
   m_Layer: 0
   m_Name: Holster
   m_TagString: Untagged
@@ -33,22 +32,6 @@ Transform:
   - {fileID: 2154554819488556673}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3921525398663019014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890392362592641014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6885afe7ee5043f479149748ad7be275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRange: 1
-  maxRange: 1
-  decay: 0
-  holdable: {fileID: 0}
 --- !u!1 &2469837753180232536
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +45,7 @@ GameObject:
   - component: {fileID: 6736387194679545334}
   - component: {fileID: 6028115265115772192}
   - component: {fileID: 915577456819963461}
+  - component: {fileID: 7052528429233189189}
   m_Layer: 3
   m_Name: root
   m_TagString: Holster
@@ -176,3 +160,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &7052528429233189189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469837753180232536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215baa6713e2026469a93267384391cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeGrabbed: 1

@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [Header("public variables")]
-    public Transform CarryAnchorpoint;
     public LayerMask groundMask;
     public LayerMask holdableMask;
     public Holdable heldObject;
@@ -23,6 +22,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform plumbBobRoot;
     public PhysicMaterial groundFriction;
     public PhysicMaterial airFriction;
+    [SerializeField] private Holder holder;
 
     [Header("player stats")]
     private PlayerState currentPlayerState;
@@ -136,7 +136,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if(closestGrab){
             heldObject = closestGrab.GetComponent<Holdable>();
-            heldObject.grabbed(CarryAnchorpoint, false);
+            heldObject.grabbed(holder);
         }
 
         animator.SetBool("Carrying", heldObject);

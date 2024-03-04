@@ -78,8 +78,8 @@ public class SaveManager : MonoBehaviour
 					instance.lanterns[i].transform.position = new Vector3(saveData.lanternData[i].lanternPos[0], saveData.lanternData[i].lanternPos[1], saveData.lanternData[i].lanternPos[2]);
 					if (saveData.lanternData[i].holderIndex != -99)
 					{
-						Transform dataTransform = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex);
-						instance.lanterns[i].GetComponent<Holdable>().grabbed(dataTransform, saveData.lanternData[i].canBeGrabbed);
+						Holder dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponent<Holder>();
+						instance.lanterns[i].GetComponent<Holdable>().grabbed(dataHolder);
 					}
 					else
 					{
@@ -119,7 +119,7 @@ public class SaveManager : MonoBehaviour
 				//add holder to list
 				if(tempHoldable.holder != null)
 				{
-					tempData.holderIndex = tempHoldable.holder.GetSiblingIndex();
+					tempData.holderIndex = tempHoldable.holder.transform.GetSiblingIndex();
 				} else
 				{
 					tempData.holderIndex = -99;

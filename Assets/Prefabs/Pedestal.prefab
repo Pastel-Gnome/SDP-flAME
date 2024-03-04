@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5162260053707292754}
-  - component: {fileID: 3229624250667362138}
   m_Layer: 0
   m_Name: Pedestal
   m_TagString: Untagged
@@ -26,29 +25,13 @@ Transform:
   m_GameObject: {fileID: 7537022344955238684}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.57, z: -5.803721}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 46802931131570557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3229624250667362138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7537022344955238684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6885afe7ee5043f479149748ad7be275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRange: 1
-  maxRange: 1
-  decay: 0
-  holdable: {fileID: 0}
 --- !u!1 &7818621967327896979
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +45,7 @@ GameObject:
   - component: {fileID: 5357533046093856620}
   - component: {fileID: 5060987957160463851}
   - component: {fileID: 1438520187579520816}
+  - component: {fileID: 1353440073538827232}
   m_Layer: 3
   m_Name: root
   m_TagString: Pedestal
@@ -176,3 +160,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &1353440073538827232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818621967327896979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215baa6713e2026469a93267384391cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeGrabbed: 1
+  providesCharge: 1

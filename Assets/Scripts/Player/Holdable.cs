@@ -5,7 +5,7 @@ using UnityEngine;
 public class Holdable : MonoBehaviour
 {
     private Rigidbody rb;
-    public Transform holder;
+    public Holder holder;
     [SerializeField] private Vector3 centerOfMass;
 
     private bool canBeGrabbed;
@@ -21,12 +21,15 @@ public class Holdable : MonoBehaviour
     void FixedUpdate()
     {
         if(holder){
-            transform.SetPositionAndRotation(holder.position, holder.rotation);
+            transform.SetPositionAndRotation(holder.carryAnchor.position, holder.carryAnchor.rotation);
         }
     }
 
-    public virtual void grabbed(Transform holderNew, bool canBeGrabbedNew){
-        canBeGrabbed = canBeGrabbedNew;
+    public virtual void grabbed(Holder holderNew){
+        if(holder){holder.holding = null;}
+        holder = holderNew;
+        holder.holding = this;
+        canBeGrabbed = holder.canBeGrabbed;
         rb.isKinematic = true;
         holder = holderNew;
         if (!canBeGrabbed) { gameObject.layer = 2; }
@@ -35,6 +38,7 @@ public class Holdable : MonoBehaviour
     }
 
     public virtual void dropped(Vector3 exitForce){
+        holder.holding = null;
         rb.isKinematic = false;
         rb.AddForce(exitForce);
         holder = null;

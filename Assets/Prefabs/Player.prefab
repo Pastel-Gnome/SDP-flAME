@@ -1035,6 +1035,7 @@ GameObject:
   - component: {fileID: 1108109683815205573}
   - component: {fileID: 1819165649099096345}
   - component: {fileID: 3755378261543971812}
+  - component: {fileID: 7703108917301576292}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1090,6 +1091,7 @@ MonoBehaviour:
   plumbBobRoot: {fileID: 0}
   groundFriction: {fileID: 13400000, guid: 3a8180f7db2c77145a87f4f47f671d24, type: 2}
   airFriction: {fileID: 13400000, guid: dd20cbcfb2a7ee84aa24d770b91c7b98, type: 2}
+  holder: {fileID: 7703108917301576292}
   balanceRecoverRate: 1
   runSpeed: 60
   maxRunSpeed: 4
@@ -1097,13 +1099,13 @@ MonoBehaviour:
   jumpDuration: 0.2
   getupDuration: 1
   grabTime: 0
-  shadowLevel: 0
   maxShadowTime: -999
   shadowTimer: 0
   grounded: 0
   jumping: 0
   grabbing: 0
   isLit: 0
+  isInCutscene: 0
 --- !u!136 &3974624193622179629
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1198,6 +1200,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7703108917301576292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887654963719330806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215baa6713e2026469a93267384391cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canBeGrabbed: 0
 --- !u!1 &7292730599919244464
 GameObject:
   m_ObjectHideFlags: 0
