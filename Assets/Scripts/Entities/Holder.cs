@@ -9,7 +9,7 @@ public class Holder : PowerSource
     public bool canBeGrabbed;
     public bool providesCharge;
     public Transform carryAnchor;
-    public Holdable holding;
+    public bool holding;
 
     private void Start(){
         if(!carryAnchor){

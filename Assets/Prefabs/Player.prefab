@@ -1071,7 +1071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb2795422d634d4c87f10ea2518cc8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarryAnchorpoint: {fileID: 1857360165927931643}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1212,7 +1211,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215baa6713e2026469a93267384391cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPower: 0
+  powerOutput: []
   canBeGrabbed: 0
+  providesCharge: 1
+  carryAnchor: {fileID: 1857360165927931643}
+  holding: {fileID: 0}
 --- !u!1 &7292730599919244464
 GameObject:
   m_ObjectHideFlags: 0

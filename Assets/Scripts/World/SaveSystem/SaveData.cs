@@ -15,10 +15,18 @@ public class SaveData
         public bool canBeGrabbed;
     }
 
+    [System.Serializable]
+    public struct HolderData
+    {
+        public bool holdingSomething;
+        public float currentPower;
+    }
+
 	public string sceneName;
 	public int checkpoint = -99;
     public Quaternion playerRotation = Quaternion.identity;
 	public List<LanternData> lanternData = new List<LanternData>();
+    public List<HolderData> holderData = new List<HolderData>();
 
     public string SaveToJson()
     {

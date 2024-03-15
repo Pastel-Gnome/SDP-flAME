@@ -26,9 +26,9 @@ public class Holdable : MonoBehaviour
     }
 
     public virtual void grabbed(Holder holderNew){
-        if(holder){holder.holding = null;}
+        if(holder){holder.holding = false;}
         holder = holderNew;
-        holder.holding = this;
+        holder.holding = true;
         canBeGrabbed = holder.canBeGrabbed;
         rb.isKinematic = true;
         holder = holderNew;
@@ -38,7 +38,7 @@ public class Holdable : MonoBehaviour
     }
 
     public virtual void dropped(Vector3 exitForce){
-        holder.holding = null;
+        holder.holding = false;
         rb.isKinematic = false;
         rb.AddForce(exitForce);
         holder = null;
@@ -50,4 +50,12 @@ public class Holdable : MonoBehaviour
     {
         return canBeGrabbed;
     }
+
+	public virtual void loadUnheld()
+	{
+		rb.isKinematic = false;
+		holder = null;
+		gameObject.layer = 7;
+		rb.useGravity = true;
+	}
 }

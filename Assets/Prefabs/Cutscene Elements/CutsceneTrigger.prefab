@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standSpot: {fileID: 8441159699518496201}
-  nextScene: Test Scene - Amelia 2
+  nextScene: Test2_CutsceneDestination
   cutscenePanel: {fileID: 0}
   stepsLeft: 3
 --- !u!1 &373911774618810496

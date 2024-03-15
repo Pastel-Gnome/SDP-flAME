@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class PlayerBehaviour : MonoBehaviour
     public PhysicMaterial groundFriction;
     public PhysicMaterial airFriction;
     [SerializeField] private Holder holder;
+    private Slider TempDarknessIndicator;
 
     [Header("player stats")]
     private PlayerState currentPlayerState;
@@ -48,6 +50,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         currentPlayerState = new State_Stand(this);
         currentPlayerState.Chosen();
+
+        TempDarknessIndicator = plumbBob.parent.GetComponentInChildren<Slider>();
+        if(maxShadowTime == -999)
+        {
+            TempDarknessIndicator.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -56,10 +64,15 @@ public class PlayerBehaviour : MonoBehaviour
         if (!isLit && maxShadowTime != -999 && shadowTimer > 0)
         {
             shadowTimer -= Time.deltaTime;
-            if (shadowTimer <= 0) { Debug.Log("Player has been in darkness too long. Game Over"); shadowTimer = 0; }
+            if (shadowTimer <= 0) { Debug.Log("Player has been in darkness too long. Game Over"); StartCoroutine(Die(0.5f)); shadowTimer = 0; }
         } else if (isLit && shadowTimer < maxShadowTime && shadowTimer != 0) {
 			shadowTimer += Time.deltaTime;
 		}
+
+        if (maxShadowTime != -999)
+        {
+            TempDarknessIndicator.value = shadowTimer / maxShadowTime; // slider value is a fraction of maxShadowTime, showing what % of time is left
+        }
         //
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 
@@ -149,5 +162,11 @@ public class PlayerBehaviour : MonoBehaviour
             heldObject.dropped(exitForce);
             heldObject = null;
         }
+    }
+
+    public IEnumerator Die(float delay = 0)
+    {
+        yield return new WaitForSeconds(delay);
+        SaveManager.LoadJsonData();
     }
 }
