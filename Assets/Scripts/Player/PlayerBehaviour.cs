@@ -26,9 +26,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Holder holder;
     private Slider TempDarknessIndicator;
 
-    [Header("player stats")]
+
     private PlayerState currentPlayerState;
-    public float balanceRecoverRate;
+	[Header("player stats")]
+	public float balanceRecoverRate;
     public float runSpeed;
     public float maxRunSpeed;
     public float jumpSpeed;
