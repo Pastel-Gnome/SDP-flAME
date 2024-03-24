@@ -119,8 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredPower: 2
-  positionA: {x: -3.5, y: 0, z: 5}
-  positionB: {x: -3.5, y: 3, z: 5}
+  positionA: {x: 0, y: 0, z: 0.5}
+  positionB: {x: 0, y: 3, z: 0.5}
   moveSpeed: 0.2
   moveObjectTransform: {fileID: 3249234436208125264}
 --- !u!1 &596593223001691655
@@ -186,7 +186,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c92220bd023f68c46bd48e8ffc2a5eeb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
