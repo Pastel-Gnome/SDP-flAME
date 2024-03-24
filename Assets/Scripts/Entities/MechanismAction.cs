@@ -5,6 +5,7 @@ using UnityEngine;
 public class MechanismAction : MonoBehaviour
 {
     [SerializeField] private float requiredPower = 1;
+    [SerializeField] protected float currentPower;
     public virtual void OnStart(Mechanism mechanism){
 
     }
@@ -14,6 +15,6 @@ public class MechanismAction : MonoBehaviour
     }
 
     public virtual void OnFixedUpdate(Mechanism mechanism){
-
+        currentPower = mechanism.currentPowerInput/requiredPower;
     }
 }

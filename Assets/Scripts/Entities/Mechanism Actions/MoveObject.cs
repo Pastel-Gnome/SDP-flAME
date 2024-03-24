@@ -24,7 +24,9 @@ public class MoveObject : MechanismAction
     // Update is called once per frame
     public override void OnFixedUpdate(Mechanism mechanism)
     {
-        Vector3 targetPosition = Vector3.Lerp(positionA, positionB, mechanism.currentPowerInput);
+        base.OnFixedUpdate(mechanism);
+
+        Vector3 targetPosition = Vector3.Lerp(positionA, positionB, currentPower);
         moveObjectTransform.localPosition = Vector3.SmoothDamp(moveObjectTransform.localPosition, targetPosition, ref currentVelocity, moveSpeed * Time.fixedDeltaTime);
     }
 }

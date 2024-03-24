@@ -22,10 +22,12 @@ public class PowerCord : MechanismAction
     // Update is called once per frame
     public override void OnFixedUpdate(Mechanism mechanism)
     {
+        base.OnFixedUpdate(mechanism);
+
         float alpha = 1.0f;
         Gradient gradient = new Gradient();
         gradient.SetKeys(
-            new GradientColorKey[] { new GradientColorKey(Color.Lerp(colorA, colorB, mechanism.currentPowerInput), 0.0f)},
+            new GradientColorKey[] { new GradientColorKey(Color.Lerp(colorA, colorB, currentPower), 0.0f)},
             new GradientAlphaKey[] { new GradientAlphaKey(alpha, 1)}
         );
         lineRenderer.colorGradient = gradient;

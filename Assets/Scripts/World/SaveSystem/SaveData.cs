@@ -8,6 +8,7 @@ public class SaveData
     [System.Serializable]
     public struct LanternData
     {
+        
         public float lightRange;
         public List<float> lanternPos;
         // holderIndex set to child index from holder's parent object, -99 if no holder

@@ -22,6 +22,8 @@ public class PowerBulb : MechanismAction
     // Update is called once per frame
     public override void OnFixedUpdate(Mechanism mechanism)
     {
-        meshRenderer.material.color = Color.Lerp(colorA, colorB, mechanism.currentPowerInput);
+        base.OnFixedUpdate(mechanism);
+
+        meshRenderer.material.color = Color.Lerp(colorA, colorB, currentPower);
     }
 }

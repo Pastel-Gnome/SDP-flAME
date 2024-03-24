@@ -30,7 +30,7 @@ public class Mechanism : MonoBehaviour
     {
         float totalInput = 0;
         foreach(PowerSource i in powerSources){totalInput += i.currentPower;}
-        currentPowerInput = totalInput/maxPowerInput;
+        currentPowerInput = totalInput;
 
         foreach(MechanismAction i in mechanismActions){
             i.OnFixedUpdate(this);
