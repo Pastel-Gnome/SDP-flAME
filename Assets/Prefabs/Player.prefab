@@ -145,7 +145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787523044569940401}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.34858656, y: 1.0004442e-11, z: 0.0000061357628, w: 0.9372766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2, y: -1, z: 0}
   m_LocalScale: {x: 0.2, y: 1.5, z: 0.2}
   m_ConstrainProportionsScale: 0
@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2269448856045136715}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000005900859, z: -0, w: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
@@ -514,7 +514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3759524515626911416}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000036831025, y: 0.000003683096, z: -0.3224307, w: 0.9465931}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3224309, w: 0.94659305}
   m_LocalPosition: {x: -0.94, y: -0.48, z: -0}
   m_LocalScale: {x: 0.49999997, y: 1.25, z: 0.3333333}
   m_ConstrainProportionsScale: 0
@@ -629,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4218590308711967773}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000005900859, z: -0, w: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.70000005, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -1071,7 +1071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb2795422d634d4c87f10ea2518cc8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarryAnchorpoint: {fileID: 1857360165927931643}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1095,10 +1094,10 @@ MonoBehaviour:
   balanceRecoverRate: 1
   runSpeed: 60
   maxRunSpeed: 4
-  jumpSpeed: 1.25
+  jumpSpeed: 1
   jumpDuration: 0.2
   getupDuration: 1
-  grabTime: 0
+  grabTime: 0.35
   maxShadowTime: -999
   shadowTimer: 0
   grounded: 0
@@ -1125,7 +1124,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -1175,8 +1174,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 1.6
+  m_Radius: 0.35
+  m_Height: 1.78
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!95 &3755378261543971812
@@ -1212,7 +1211,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215baa6713e2026469a93267384391cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPower: 0
+  powerOutput: []
   canBeGrabbed: 0
+  providesCharge: 1
+  carryAnchor: {fileID: 1857360165927931643}
+  holding: 0
 --- !u!1 &7292730599919244464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,8 +1243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7292730599919244464}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3190833, w: 0.9477267}
+  m_LocalPosition: {x: 1, y: -0.36, z: 0}
   m_LocalScale: {x: 0.49999997, y: 1.2499999, z: 0.3333333}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1687,7 +1691,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8708092061068941451}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000005900859, z: -0, w: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.39999998, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
@@ -1774,7 +1778,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9219400483933375417}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.022604642, y: 0.0023559248, z: -0.00000036991858, w: 0.99974173}
+  m_LocalRotation: {x: 0, y: 0.0023562086, z: 0, w: 0.99999726}
   m_LocalPosition: {x: 0, y: -0.7999999, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0

@@ -14,6 +14,7 @@ public class SaveManager : MonoBehaviour
 	public GameObject player;
 	public Transform lightParent;
 	public LightSource[] lanterns;
+	public Holder[] holders;
 	public Transform checkpointParent;
 
 	private void Awake()
@@ -54,6 +55,7 @@ public class SaveManager : MonoBehaviour
 			player = FindFirstObjectByType<PlayerBehaviour>().gameObject;
 			lightParent = FindFirstObjectByType<LightManager>().transform;
 			lanterns = lightParent.GetChild(0).GetComponentsInChildren<LightSource>();
+			holders = lightParent.GetChild(1).GetComponentsInChildren<Holder>();
 			checkpointParent = GameObject.Find("Checkpoints").transform;
 
 			if (saveData.sceneName != null && saveData.sceneName == SceneManager.GetActiveScene().name && saveData.checkpoint != -99)
@@ -70,21 +72,28 @@ public class SaveManager : MonoBehaviour
 		{
 			saveData.LoadFromJson(jsonFile);
 
-			if (saveData.checkpoint != -99)
+			if (saveData.checkpoint != -99 && saveData.sceneName == SceneManager.GetActiveScene().name)
 			{
+				for(int i = 0; i < instance.holders.Length; i++)
+				{
+					instance.holders[i].currentPower = saveData.holderData[i].currentPower;
+					instance.holders[i].holding = saveData.holderData[i].holdingSomething;
+				}
+
 				for (int i = 0; i < instance.lanterns.Length; i++)
 				{
 					instance.lanterns[i].currentRange = saveData.lanternData[i].lightRange;
 					instance.lanterns[i].transform.position = new Vector3(saveData.lanternData[i].lanternPos[0], saveData.lanternData[i].lanternPos[1], saveData.lanternData[i].lanternPos[2]);
 					if (saveData.lanternData[i].holderIndex != -99)
 					{
-						Holder dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponent<Holder>();
-						instance.lanterns[i].GetComponent<Holdable>().grabbed(dataHolder);
+						Holder dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponentInChildren<Holder>();
+						Holdable holdable = instance.lanterns[i].GetComponent<Holdable>();
+						//holdable.holder = dataHolder;
+						holdable.grabbed(dataHolder);
 					}
 					else
 					{
-						instance.lanterns[i].GetComponent<Holdable>().dropped(Vector3.zero);
-						instance.lanterns[i].GetComponent<Holdable>().holder = null;
+						instance.lanterns[i].GetComponent<Holdable>().loadUnheld();
 						instance.lanterns[i].transform.position = new Vector3(saveData.lanternData[i].lanternPos[0], saveData.lanternData[i].lanternPos[1], saveData.lanternData[i].lanternPos[2]);
 					}
 				}
@@ -119,7 +128,7 @@ public class SaveManager : MonoBehaviour
 				//add holder to list
 				if(tempHoldable.holder != null)
 				{
-					tempData.holderIndex = tempHoldable.holder.transform.GetSiblingIndex();
+					tempData.holderIndex = tempHoldable.holder.transform.parent.GetSiblingIndex();
 				} else
 				{
 					tempData.holderIndex = -99;
@@ -130,6 +139,14 @@ public class SaveManager : MonoBehaviour
 			{
 				// not a holdable lantern, maybe add to eventual "puzzle elements" list?
 			}
+		}
+
+		foreach(Holder holder in instance.holders)
+		{
+			SaveData.HolderData tempData = new SaveData.HolderData();
+			tempData.holdingSomething = holder.holding;
+			tempData.currentPower = holder.currentPower;
+			saveData.holderData.Add(tempData);
 		}
 
 		if (WriteToFile("torchlight" + saveSlot + ".dat", saveData.SaveToJson()))
