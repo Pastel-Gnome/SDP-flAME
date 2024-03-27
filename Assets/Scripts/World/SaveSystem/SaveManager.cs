@@ -73,6 +73,7 @@ public class SaveManager : MonoBehaviour
 			saveData.LoadFromJson(jsonFile);
 			bool playerHolding = false;
 			PlayerBehaviour pb = instance.player.GetComponent<PlayerBehaviour>();
+			pb.shadowTimer = pb.maxShadowTime;
 
 			if (saveData.checkpoint != -99 && saveData.sceneName == SceneManager.GetActiveScene().name)
 			{
