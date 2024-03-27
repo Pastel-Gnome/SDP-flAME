@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class LightManager : MonoBehaviour
 {
+    [SerializeField] private bool enableLights = true;
     Material shadowMaterial;
     [SerializeField] private LightSource[] lightSources;
     [SerializeField] private Transform[] chargeSources;
@@ -18,16 +20,23 @@ public class LightManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        
         for (int i = 0; i < lightSources.Length; i++)
         {
             lightSources[i].Charge(chargeSources);
-            positions[i] = lightSources[i].transform.position;    
-            ranges[i] = lightSources[i].currentRange;                   
+            
+            if(enableLights){
+                positions[i] = lightSources[i].transform.position;    
+                ranges[i] = lightSources[i].currentRange;    
+            }           
         }
 
-        //Shader.SetGlobalVectorArray("_lightSources", lightSources);
+        if(!enableLights){
+            ranges[0] = 1000;
+        }
+
         Shader.SetGlobalFloatArray("_Ranges", ranges);
         Shader.SetGlobalVectorArray("_Positions", positions);
         Shader.SetGlobalFloat("_PositionArray", lightSources.Length);

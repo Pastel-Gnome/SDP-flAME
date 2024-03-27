@@ -25,8 +25,6 @@ public class PlayerBehaviour : MonoBehaviour
     public PhysicMaterial airFriction;
     [SerializeField] private Holder holder;
     private Slider TempDarknessIndicator;
-
-
     private PlayerState currentPlayerState;
 	[Header("player stats")]
 	public float balanceRecoverRate;
