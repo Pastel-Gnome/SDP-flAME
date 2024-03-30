@@ -13,9 +13,14 @@ public class Holdable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass;
+        Init();
     }
+
+    public void Init()
+    {
+		rb = GetComponent<Rigidbody>();
+		rb.centerOfMass = centerOfMass;
+	}
 
     // Update is called once per frame
     void FixedUpdate()
