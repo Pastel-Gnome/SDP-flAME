@@ -24,12 +24,11 @@ public class LightSource : MonoBehaviour
                 foundChargeSource = true;
             }
         }
-        else{
-            foreach(Transform j in chargeSources){
-                if(Vector2.Distance(transform.position, j.position) < chargeRange){
-                    foundChargeSource = true;
-                    break;
-                }
+
+        foreach(Transform j in chargeSources){
+            if(Vector2.Distance(transform.position, j.position) < chargeRange){
+                foundChargeSource = true;
+                break;
             }
         }
 
