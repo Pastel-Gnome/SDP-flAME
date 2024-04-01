@@ -71,6 +71,9 @@ public class SaveManager : MonoBehaviour
 		if (LoadFromFile("torchlight" + saveSlot + ".dat", out var jsonFile))
 		{
 			saveData.LoadFromJson(jsonFile);
+			bool playerHolding = false;
+			PlayerBehaviour pb = instance.player.GetComponent<PlayerBehaviour>();
+			pb.shadowTimer = pb.maxShadowTime;
 
 			if (saveData.checkpoint != -99 && saveData.sceneName == SceneManager.GetActiveScene().name)
 			{
@@ -86,7 +89,18 @@ public class SaveManager : MonoBehaviour
 					instance.lanterns[i].transform.position = new Vector3(saveData.lanternData[i].lanternPos[0], saveData.lanternData[i].lanternPos[1], saveData.lanternData[i].lanternPos[2]);
 					if (saveData.lanternData[i].holderIndex != -99)
 					{
-						Holder dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponentInChildren<Holder>();
+						Holder dataHolder;
+						if (saveData.lanternData[i].holderIndex == -19) // if held by the player
+						{
+							dataHolder = instance.player.GetComponent<Holder>();
+							pb.animator.SetBool("Carrying", true);
+							pb.animator.Play("Arms-Carry", 1);
+							pb.heldObject = instance.lanterns[i].holdable;
+							playerHolding = true;
+						} else // if held by a pedestal, holster, or otherwise not held by the player
+						{
+							dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponentInChildren<Holder>();
+						}
 						Holdable holdable = instance.lanterns[i].GetComponent<Holdable>();
 						//holdable.holder = dataHolder;
 						holdable.grabbed(dataHolder);
@@ -100,6 +114,12 @@ public class SaveManager : MonoBehaviour
 
 				instance.player.transform.position = instance.checkpointParent.GetChild(saveData.checkpoint).position;
 				instance.player.transform.rotation = saveData.playerRotation;
+				if (!playerHolding)
+				{
+					pb.animator.SetBool("Carrying", false);
+					pb.animator.Play("Arms-Idle", 1);
+					pb.heldObject = null;
+				}
 			} else
 			{
 				SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
@@ -128,7 +148,13 @@ public class SaveManager : MonoBehaviour
 				//add holder to list
 				if(tempHoldable.holder != null)
 				{
-					tempData.holderIndex = tempHoldable.holder.transform.parent.GetSiblingIndex();
+					if (tempHoldable.holder.name != "Player")
+					{
+						tempData.holderIndex = tempHoldable.holder.transform.parent.GetSiblingIndex();
+					} else if (tempHoldable.holder.name == "Player")
+					{
+						tempData.holderIndex = -19; // Funny number related to a "personality numbers" website I found, where the word "player" is associated with 3+7+9 (https://www.worldnumerology.com/numerology-personality/)
+					}
 				} else
 				{
 					tempData.holderIndex = -99;
