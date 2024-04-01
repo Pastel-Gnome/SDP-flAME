@@ -19,6 +19,7 @@ public class LightSource : MonoBehaviour
         bool foundChargeSource = false;
         if(holdable && holdable.holder){
             holdable.holder.currentPower = Mathf.Lerp(holdable.holder.currentPower, currentRange/maxRange, 0.25f);
+            print(holdable.holder.currentPower + ", " + holdable.holder.name);
             
             if(holdable.holder.providesCharge){
                 foundChargeSource = true;
