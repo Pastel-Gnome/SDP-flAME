@@ -20,9 +20,10 @@ public class SaveManager : MonoBehaviour
 	public Holder[] holders;
 	public Transform checkpointParent;
 
-	[Header("Main Menu Objects")]
+	[Header("Main Menu Objects (Do Not Set If Not On Main Menu)")]
 	public Transform newGameParent;
 	public Transform continueGameParent;
+	public Transform newGameConfirmScreen;
 
 	private void Awake()
 	{
@@ -281,5 +282,16 @@ public class SaveManager : MonoBehaviour
 			instance.continueGameParent.GetChild(i).GetComponent<Button>().interactable = false;
 		}
 
+	}
+
+	public static void CheckNewGame()
+	{
+		if(CheckExistence("torchlight" + saveSlot + ".dat"))
+		{
+			instance.newGameConfirmScreen.gameObject.SetActive(true);
+		} else
+		{
+			OpenScene();
+		}
 	}
 }
