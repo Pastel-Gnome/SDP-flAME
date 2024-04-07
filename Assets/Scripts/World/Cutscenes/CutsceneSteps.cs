@@ -9,17 +9,20 @@ using UnityEngine.UIElements;
 public class CutsceneSteps : MonoBehaviour
 {
 	[SerializeField] Transform standSpot;
-	[SerializeField] string nextScene;
+	[SerializeField] string nextActiveScene;
 	[SerializeField] Transform cutscenePanel;
-	[SerializeField] int stepsLeft;
+
+	[SerializeField] MultiDialogueData dialogueData;
+	[SerializeField] int thisCutsceneID;
 
 	private bool sceneStarted;
-	private TextMeshProUGUI cutsceneText;
+	private DialogueController DiaControl;
 	private PlayerBehaviour player;
 
 	private void Start()
 	{
-		cutsceneText = cutscenePanel.Find("Cutscene Text").GetComponent<TextMeshProUGUI>();
+		DiaControl = cutscenePanel.parent.GetComponent<DialogueController>();
+
 		cutscenePanel.gameObject.SetActive(false);
 	}
 
@@ -30,7 +33,7 @@ public class CutsceneSteps : MonoBehaviour
 			HaltPlayer(other.transform);
 			cutscenePanel.gameObject.SetActive(true);
 			sceneStarted = true;
-			NextStep();
+			DiaControl.StartMultiDialogue(dialogueData, thisCutsceneID);
 		}
 	}
 
@@ -44,21 +47,21 @@ public class CutsceneSteps : MonoBehaviour
 
 	public void NextStep()
 	{
-		if(sceneStarted && stepsLeft > 0)
+		if(cutscenePanel.gameObject.activeSelf)
 		{
-			cutsceneText.text = "Number of steps left: " + stepsLeft;
-			stepsLeft--;
-		} else if (stepsLeft <= 0) 
-		{
-			EndCutscene();
+			DiaControl.DisplayNextSentenceMultiCharacters();
+			if (!cutscenePanel.gameObject.activeSelf)
+			{
+				EndCutscene();
+			}
 		}
 	}
 
 	private void EndCutscene()
 	{
 		sceneStarted = false;
-		SaveManager.PostCutsceneSave(nextScene);
-		SceneManager.LoadSceneAsync(nextScene);
+		SaveManager.PostCutsceneSave(nextActiveScene);
+		SceneManager.LoadSceneAsync(nextActiveScene);
 	}
 
 	private void HaltPlayer(Transform other)
