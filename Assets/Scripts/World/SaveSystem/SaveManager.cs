@@ -55,7 +55,7 @@ public class SaveManager : MonoBehaviour
 		}
 		else
 		{
-			SceneManager.LoadSceneAsync("Assets/Test - Amelia/FeatureShowcase.unity");
+			SceneManager.LoadSceneAsync("Assets/Test - Amelia/Test1_Saving_Cutscene.unity");
 		}
 	}
 

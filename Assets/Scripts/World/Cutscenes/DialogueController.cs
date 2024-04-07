@@ -55,7 +55,7 @@ public class DialogueController : MonoBehaviour
 
         sentences.Clear();
 
-        foreach (MultiDialogueData.DialogueEntry entry in dialogueData.dialogueEntries[sceneID])
+        foreach (MultiDialogueData.DialogueEntry entry in dialogueData.dialogueEntries[sceneID-1])
         {
             characterName.text = entry.characterName;
             //characterImage.sprite = entry.characterSprite;

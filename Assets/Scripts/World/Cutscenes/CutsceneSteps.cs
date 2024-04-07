@@ -12,16 +12,17 @@ public class CutsceneSteps : MonoBehaviour
 	[SerializeField] string nextActiveScene;
 	[SerializeField] Transform cutscenePanel;
 
-	[SerializeField] MultiDialogueData dialogueData;
 	[SerializeField] int thisCutsceneID;
 
 	private bool sceneStarted;
 	private DialogueController DiaControl;
+	private MultiDialogueData dialogueData;
 	private PlayerBehaviour player;
 
 	private void Start()
 	{
 		DiaControl = cutscenePanel.parent.GetComponent<DialogueController>();
+		dialogueData = FindFirstObjectByType<SaveManager>().GetComponent<MultiDialogueData>();
 
 		cutscenePanel.gameObject.SetActive(false);
 	}

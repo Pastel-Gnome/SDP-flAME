@@ -24,7 +24,6 @@ public class MultiDialogueData : MonoBehaviour
     public void Awake()
     {
         dialogueEntries = ReadCSV(csvFile);
-        Debug.Log("This happened.");
     }
 
     public List<List<DialogueEntry>> ReadCSV(TextAsset csv)
