@@ -4,25 +4,34 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
+	[Header("Save Data")]
 	public static SaveManager instance;
 	public static int saveSlot = -99;
 	public static SaveData saveData = new SaveData();
 
+	[Header("In-Game Objects")]
 	public GameObject player;
 	public Transform lightParent;
 	public LightSource[] lanterns;
 	public Holder[] holders;
 	public Transform checkpointParent;
 
+	[Header("Main Menu Objects (Do Not Set If Not On Main Menu)")]
+	public Transform newGameParent;
+	public Transform continueGameParent;
+	public Transform newGameConfirmScreen;
+
 	private void Awake()
 	{
 		if (instance != null & instance != this)
 		{
 			Destroy(this.gameObject);
-		} else
+		}
+		else
 		{
 			instance = this;
 		}
@@ -44,6 +53,15 @@ public class SaveManager : MonoBehaviour
 
 			SceneManager.LoadSceneAsync(saveData.sceneName);
 		}
+		else
+		{
+			SceneManager.LoadSceneAsync("Assets/Test - Amelia/Test1_Saving_Cutscene.unity");
+		}
+	}
+
+	public static void EmptySaveSlot()
+	{
+		File.Delete(Path.Combine(Application.persistentDataPath, "torchlight" + saveSlot + ".dat"));
 	}
 
 	void SetupSceneData(Scene currScene)
@@ -58,11 +76,33 @@ public class SaveManager : MonoBehaviour
 			holders = lightParent.GetChild(1).GetComponentsInChildren<Holder>();
 			checkpointParent = GameObject.Find("Checkpoints").transform;
 
+			Holdable[] holdables = FindObjectsByType<Holdable>(FindObjectsSortMode.None);
+			foreach (Holdable h in holdables)
+			{
+				h.Init();
+			}
+
 			if (saveData.sceneName != null && saveData.sceneName == SceneManager.GetActiveScene().name && saveData.checkpoint != -99)
 			{
 				LoadJsonData();
 			}
 			Debug.Log("Info Loaded!");
+		}
+		else if (currScene.name == "Main Menu")
+		{
+			LoadJson_MainMenu();
+		}
+	}
+
+	public static void LoadJson_MainMenu()
+	{
+		for (int i = 1; i <= 3; i++)
+		{
+			if (CheckExistence("torchlight" + i + ".dat"))
+			{
+				instance.newGameParent.GetChild(i).GetComponent<Image>().color = new Color(1f, 0.7075472f, 0.7075472f, 1f);
+				instance.continueGameParent.GetChild(i).GetComponent<Button>().interactable = true;
+			}
 		}
 	}
 
@@ -70,6 +110,7 @@ public class SaveManager : MonoBehaviour
 	{
 		if (LoadFromFile("torchlight" + saveSlot + ".dat", out var jsonFile))
 		{
+			Debug.Log("Loading Data");
 			saveData.LoadFromJson(jsonFile);
 			bool playerHolding = false;
 			PlayerBehaviour pb = instance.player.GetComponent<PlayerBehaviour>();
@@ -77,7 +118,7 @@ public class SaveManager : MonoBehaviour
 
 			if (saveData.checkpoint != -99 && saveData.sceneName == SceneManager.GetActiveScene().name)
 			{
-				for(int i = 0; i < instance.holders.Length; i++)
+				for (int i = 0; i < instance.holders.Length; i++)
 				{
 					instance.holders[i].currentPower = saveData.holderData[i].currentPower;
 					instance.holders[i].holding = saveData.holderData[i].holdingSomething;
@@ -97,7 +138,8 @@ public class SaveManager : MonoBehaviour
 							pb.animator.Play("Arms-Carry", 1);
 							pb.heldObject = instance.lanterns[i].holdable;
 							playerHolding = true;
-						} else // if held by a pedestal, holster, or otherwise not held by the player
+						}
+						else // if held by a pedestal, holster, or otherwise not held by the player
 						{
 							dataHolder = instance.lightParent.GetChild(1).GetChild(saveData.lanternData[i].holderIndex).GetComponentInChildren<Holder>();
 						}
@@ -120,18 +162,25 @@ public class SaveManager : MonoBehaviour
 					pb.animator.Play("Arms-Idle", 1);
 					pb.heldObject = null;
 				}
-			} else
-			{
-				SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+				Debug.Log("Loaded Game from Slot " + saveSlot);
 			}
-
-			Debug.Log("Loaded Game from Slot 1");
+			else
+			{
+				if (SceneManager.GetActiveScene().name != "Main Menu")
+				{
+					SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+				}
+				else
+				{
+					SceneManager.LoadSceneAsync("whiteboxlevel1");
+				}
+			}
 		}
 	}
 
 	public static void SaveJsonData(int checkpointIndex)
-    {
-        SaveData saveData = new SaveData();
+	{
+		SaveData saveData = new SaveData();
 
 		saveData.sceneName = SceneManager.GetActiveScene().name;
 		saveData.checkpoint = checkpointIndex;
@@ -146,28 +195,31 @@ public class SaveManager : MonoBehaviour
 			if (lantern.transform.TryGetComponent<Holdable>(out Holdable tempHoldable))
 			{
 				//add holder to list
-				if(tempHoldable.holder != null)
+				if (tempHoldable.holder != null)
 				{
 					if (tempHoldable.holder.name != "Player")
 					{
 						tempData.holderIndex = tempHoldable.holder.transform.parent.GetSiblingIndex();
-					} else if (tempHoldable.holder.name == "Player")
+					}
+					else if (tempHoldable.holder.name == "Player")
 					{
 						tempData.holderIndex = -19; // Funny number related to a "personality numbers" website I found, where the word "player" is associated with 3+7+9 (https://www.worldnumerology.com/numerology-personality/)
 					}
-				} else
+				}
+				else
 				{
 					tempData.holderIndex = -99;
 				}
 				tempData.canBeGrabbed = tempHoldable.GetGrabAbility();
 				saveData.lanternData.Add(tempData);
-			} else
+			}
+			else
 			{
 				// not a holdable lantern, maybe add to eventual "puzzle elements" list?
 			}
 		}
 
-		foreach(Holder holder in instance.holders)
+		foreach (Holder holder in instance.holders)
 		{
 			SaveData.HolderData tempData = new SaveData.HolderData();
 			tempData.holdingSomething = holder.holding;
@@ -177,7 +229,7 @@ public class SaveManager : MonoBehaviour
 
 		if (WriteToFile("torchlight" + saveSlot + ".dat", saveData.SaveToJson()))
 		{
-			Debug.Log("Saved Game to Slot 1");
+			Debug.Log("Saved Game to Slot " + saveSlot);
 		}
 	}
 
@@ -204,7 +256,42 @@ public class SaveManager : MonoBehaviour
 	static bool LoadFromFile(string fileName, out string loadContents)
 	{
 		var filePath = Path.Combine(Application.persistentDataPath, fileName);
-		try { loadContents = File.ReadAllText(filePath); return true;}
+		try { loadContents = File.ReadAllText(filePath); return true; }
 		catch { loadContents = "no data"; return false; }
+	}
+
+	static bool CheckExistence(string fileName)
+	{
+		var filePath = Path.Combine(Application.persistentDataPath, fileName);
+		return (File.Exists(filePath));
+	}
+
+	public static void ChangeSaveSlot(int desSlot)
+	{
+		saveSlot = desSlot;
+	}
+
+	public static void EmptyAllSaveSlots()
+	{
+		for (int i = 1; i <= 3; i++)
+		{
+			ChangeSaveSlot(i);
+			EmptySaveSlot();
+
+			instance.newGameParent.GetChild(i).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+			instance.continueGameParent.GetChild(i).GetComponent<Button>().interactable = false;
+		}
+
+	}
+
+	public static void CheckNewGame()
+	{
+		if(CheckExistence("torchlight" + saveSlot + ".dat"))
+		{
+			instance.newGameConfirmScreen.gameObject.SetActive(true);
+		} else
+		{
+			OpenScene();
+		}
 	}
 }

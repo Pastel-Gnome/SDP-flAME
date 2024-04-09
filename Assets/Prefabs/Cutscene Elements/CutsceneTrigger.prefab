@@ -121,9 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standSpot: {fileID: 8441159699518496201}
-  nextScene: Test2_CutsceneDestination
+  nextActiveScene: 
   cutscenePanel: {fileID: 0}
-  stepsLeft: 3
+  dialogueData: {fileID: 11400000, guid: 4625a4b789fa64c4e8c3c101a60d651c, type: 2}
+  thisCutsceneID: 0
 --- !u!1 &373911774618810496
 GameObject:
   m_ObjectHideFlags: 0
