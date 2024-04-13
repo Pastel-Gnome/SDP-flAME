@@ -1,10 +1,11 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class CutsceneSteps : MonoBehaviour
 {
@@ -13,28 +14,33 @@ public class CutsceneSteps : MonoBehaviour
 	[SerializeField] Transform cutscenePanel;
 
 	[SerializeField] int thisCutsceneID;
+	[SerializeField] GameObject Actor1;
+	[SerializeField] GameObject Actor2;
 
 	private bool sceneStarted;
+	private int currStep;
 	private DialogueController DiaControl;
 	private MultiDialogueData dialogueData;
+	private Image fadeoutObj;
 	private PlayerBehaviour player;
 
 	private void Start()
 	{
 		DiaControl = cutscenePanel.parent.GetComponent<DialogueController>();
 		dialogueData = FindFirstObjectByType<SaveManager>().GetComponent<MultiDialogueData>();
+		fadeoutObj = cutscenePanel.transform.parent.GetChild(1).GetComponent<Image>();
 
 		cutscenePanel.gameObject.SetActive(false);
+		StartCoroutine(FadeIn());
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.name == "Player" && !sceneStarted)
 		{
+			currStep = 0;
+			StartCoroutine(FadeOut());
 			HaltPlayer(other.transform);
-			cutscenePanel.gameObject.SetActive(true);
-			sceneStarted = true;
-			DiaControl.StartMultiDialogue(dialogueData, thisCutsceneID);
 		}
 	}
 
@@ -42,6 +48,7 @@ public class CutsceneSteps : MonoBehaviour
 	{
 		if (sceneStarted && Input.GetButtonDown("Grab"))
 		{
+			currStep++;
 			NextStep();
 		}
 	}
@@ -50,11 +57,29 @@ public class CutsceneSteps : MonoBehaviour
 	{
 		if(cutscenePanel.gameObject.activeSelf)
 		{
-			DiaControl.DisplayNextSentenceMultiCharacters();
-			if (!cutscenePanel.gameObject.activeSelf)
+			if(thisCutsceneID == 1)
 			{
-				EndCutscene();
+				if(currStep != 6) // require user to interact before moving off of Leocadia "exit" text
+				{
+					if (currStep == 5) // with dialogue
+					{
+						StartCoroutine(FadeOut());
+					}
+					DiaControl.DisplayNextSentenceMultiCharacters();
+					if (!cutscenePanel.gameObject.activeSelf)
+					{
+						StartCoroutine(FadeOut());
+					}
+				}
+			} else
+			{
+				DiaControl.DisplayNextSentenceMultiCharacters();
+				if (!cutscenePanel.gameObject.activeSelf)
+				{
+					StartCoroutine(FadeOut());
+				}
 			}
+			
 		}
 	}
 
@@ -63,6 +88,102 @@ public class CutsceneSteps : MonoBehaviour
 		sceneStarted = false;
 		SaveManager.PostCutsceneSave(nextActiveScene);
 		SceneManager.LoadSceneAsync(nextActiveScene);
+	}
+
+	private IEnumerator FadeOut()
+	{
+		int tempStep = 0;
+		float timer = 0;
+		float maxDuration = 1;
+		if(currStep == 0)
+		{
+			maxDuration = maxDuration / 2;
+		}
+		sceneStarted = false;
+		while (tempStep < 4)
+        {
+            if(tempStep == 0)
+			{
+				timer += Time.fixedDeltaTime;
+				float opacity = Mathf.Lerp(0, 1, timer/maxDuration);
+				Color fadeColor = Color.black;
+				fadeColor.a = opacity;
+				fadeoutObj.color = fadeColor;
+				if(opacity >= 1)
+				{
+					timer = 0;
+					tempStep++;
+				}
+			} else if (tempStep == 1)
+			{
+				if (currStep > 0)
+				{
+					if (cutscenePanel.gameObject.activeSelf)
+					{
+						if (thisCutsceneID == 1)
+						{
+							Actor1.SetActive(false);
+						}
+					}
+					else
+					{
+						EndCutscene();
+					}
+				}
+				tempStep++;
+			} else if (tempStep == 2)
+			{
+				timer += Time.fixedDeltaTime;
+				float opacity = Mathf.Lerp(1, 0, timer / maxDuration);
+				Color fadeColor = Color.black;
+				fadeColor.a = opacity;
+				fadeoutObj.color = fadeColor;
+				if (opacity <= 0)
+				{
+					tempStep++;
+				}
+			} else if (tempStep == 3)
+			{
+				sceneStarted = true;
+				if (currStep != 0)
+				{
+					currStep++;
+					NextStep();
+				} else
+				{
+					cutscenePanel.gameObject.SetActive(true);
+					sceneStarted = true;
+					DiaControl.StartMultiDialogue(dialogueData, thisCutsceneID);
+				}
+				tempStep++;
+			}
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
+	private IEnumerator FadeIn()
+	{
+		int tempStep = 0;
+		float timer = 0;
+		float maxDuration = 1;
+		while (tempStep < 1)
+		{
+			if (tempStep == 0)
+			{
+				timer += Time.fixedDeltaTime;
+				float opacity = Mathf.Lerp(1, 0, timer / maxDuration);
+				Color fadeColor = Color.black;
+				fadeColor.a = opacity;
+				fadeoutObj.color = fadeColor;
+				if (opacity <= 0)
+				{
+					//Debug.Log("Worked");
+					timer = 0;
+					tempStep++;
+				}
+			}
+			yield return new WaitForFixedUpdate();
+		}
 	}
 
 	private void HaltPlayer(Transform other)

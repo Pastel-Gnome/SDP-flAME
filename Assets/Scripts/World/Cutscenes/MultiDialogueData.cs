@@ -21,7 +21,7 @@ public class MultiDialogueData : MonoBehaviour
     int NumOfScenes;
     public TextAsset csvFile;
 
-    public void Awake()
+    public void Start()
     {
         dialogueEntries = ReadCSV(csvFile);
     }
@@ -41,7 +41,11 @@ public class MultiDialogueData : MonoBehaviour
             {
                 string line = lines[i];
                 string[] fields = line.Split(';');
-                int sceneID = int.Parse(fields[0]);
+                bool parseSuccess = int.TryParse(fields[0], out int sceneID);
+                if(!parseSuccess)
+                {
+                    Debug.LogError("Failed on line " + i + " with this value: " + fields[0]);
+                }
 
 				if (fields.Length >= 2)
                 {
