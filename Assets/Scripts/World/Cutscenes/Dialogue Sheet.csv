@@ -4,15 +4,16 @@ Scene ID;Character Name;Text
 1;Leocadia;I will do no such thing! If Indistille wanted me to keep my voice down, he would have tried harder to keep his shrine well lit.
 1;Dagobert;This is what separates the wheat from the chaff. If you cannot handle this, what use are you to your god?
 1;Leocadia;I'm going to hunt down the person in charge! They'll hear about this! See if I ever come to this backwater village ever again!
+1; ;Leocadia stomps off...
 1;Catellus;Well, I think your mask looks stupid.
 1;Dog;Woof!
-2;Character 2;Well hello there.
-2;Character 1;Yes yes, hello!
-2;Character 1;Thank you for being here.
-2;Character 1;Wow, I'm still talking.
-2;Character 2;Okay, goodbye now.
-3;Character 2;Hello again! Fancy seeing you here.
-3;Character 1;Welcome!
+2;Catellus;Did you hear that?
+2;Dog;*whine*
+2;Dagobert;Not all of us are fit to bear Indistille's challenges. You can just go home if you're afraid.
+2;Character 1;I can't. I told the other boys I'd find the treasure at the bottom. If I go back now, they'll say I'm scared of the dark.
+2;Character 2;Fools. You will find nothing. There is no treasure but for the triumph of having journeyed to pray to your god.
+2;Character 2;...Still, I respect your determination. I too intend to reach the bottom, despite the dangers. This is a test, and I will overcome it.
+2;Character 1;Ah, Torchbearer. I feel now that I understand what it must be like for you, traversing the dark.
 3;Character 2;Well, we're kind of just sitting here.
 3;Character 1;Yep, just sitting here...
 3;Character 2;Totally sitting...

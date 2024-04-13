@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Test - Amelia/Test2_CutsceneDestination.unity
     guid: 088fe817f92e21c44ae6b7eb10262532
   - enabled: 1
+    path: Assets/Test - Amelia/Test3_SecondCutscene.unity
+    guid: edc493aaa870cb0469f636439f2d7724
+  - enabled: 1
     path: Assets/Test - Emily/whiteboxlevel1.unity
     guid: 1d7d94cd2cdbc85439cbd16d766e7631
   m_configObjects: {}
