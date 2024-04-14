@@ -5,12 +5,17 @@ using UnityEngine;
 public class PowerBulb : MechanismAction
 {
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Light[] affectedLights;
+    float[] affectedLightStartValues;
     [SerializeField] private Color colorA, colorB;
     
     // Start is called before the first frame update
     public override void OnStart(Mechanism mechanism)
     {
-        
+        affectedLightStartValues = new float[affectedLights.Length];
+        for(int i = 0; i < affectedLights.Length; i++){
+            affectedLightStartValues[i] = affectedLights[i].intensity;
+        }
     }
 
     // Update is called once per frame
@@ -25,5 +30,8 @@ public class PowerBulb : MechanismAction
         base.OnFixedUpdate(mechanism);
 
         meshRenderer.material.color = Color.Lerp(colorA, colorB, currentPower);
+        for(int i = 0; i < affectedLights.Length; i++){
+            affectedLights[i].intensity = Mathf.Lerp(0, affectedLightStartValues[i], currentPower);
+        }
     }
 }

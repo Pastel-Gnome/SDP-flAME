@@ -7,7 +7,6 @@ public class Holdable : MonoBehaviour
     private Rigidbody rb;
     public Holder holder;
     [SerializeField] private Vector3 centerOfMass;
-
     private bool canBeGrabbed;
 
     // Start is called before the first frame update
@@ -26,29 +25,32 @@ public class Holdable : MonoBehaviour
     void FixedUpdate()
     {
         if(holder){
-            transform.SetPositionAndRotation(holder.carryAnchor.position, holder.carryAnchor.rotation);
+            transform.SetPositionAndRotation(Vector3.Lerp(transform.position, holder.carryAnchor.position, holder.carryLerpRate), holder.carryAnchor.rotation);
         }
     }
 
     public virtual void grabbed(Holder holderNew){
-        if(holder){holder.holding = false;}
+        if(holder){holder.OnRelease();}
         holder = holderNew;
-        holder.holding = true;
+        holder.OnGrab();
+        
         canBeGrabbed = holder.canBeGrabbed;
-        rb.isKinematic = true;
-        holder = holderNew;
+
         if (!canBeGrabbed) { gameObject.layer = 2; }
         else { gameObject.layer = 7; }
         rb.useGravity = false;
+        rb.isKinematic = true;
     }
 
     public virtual void dropped(Vector3 exitForce){
-        holder.holding = false;
-        rb.isKinematic = false;
-        rb.AddForce(exitForce);
+        if(holder){holder.OnRelease();}
         holder = null;
+
         gameObject.layer = 7;
         rb.useGravity = true;
+        rb.isKinematic = false;
+
+        rb.AddForce(exitForce);
     }
 
     public bool GetGrabAbility()

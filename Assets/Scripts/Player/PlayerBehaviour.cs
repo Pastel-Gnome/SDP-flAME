@@ -60,29 +60,43 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!isLit && maxShadowTime != -999 && shadowTimer > 0)
-        {
+        animator.transform.forward = Vector3.Slerp(animator.transform.forward, movementInput, Time.deltaTime * 10);
+
+        float shadowPercent = (maxShadowTime - shadowTimer) * 2/maxShadowTime;
+        AudioManager.i.SetDangerLevel(shadowPercent);
+        Shader.SetGlobalFloat("_PlayerShadowLevel", shadowPercent);
+
+        //check if player is lit
+        isLit = LightManager.i.CalculateLightAtPoint(rb.transform.position) < 1f;
+        //isLit = true;
+        //print(LightManager.i.CalculateLightAtPoint(rb.transform.position));
+        
+        if (!isLit && maxShadowTime != -999 && shadowTimer > 0){
             shadowTimer -= Time.deltaTime;
-            if (shadowTimer <= 0) { Debug.Log("Player has been in darkness too long. Game Over"); StartCoroutine(Die(0.5f)); shadowTimer = 0; }
+            if (shadowTimer <= 0) { 
+                Debug.Log("Player has been in darkness too long. Game Over"); 
+                StartCoroutine(Die(0.5f)); 
+                shadowTimer = 0; 
+            }
         } else if (isLit && shadowTimer < maxShadowTime && shadowTimer != 0) {
 			shadowTimer += Time.deltaTime;
 		}
 
-        if (maxShadowTime != -999)
-        {
+        if (maxShadowTime != -999){
             TempDarknessIndicator.value = shadowTimer / maxShadowTime; // slider value is a fraction of maxShadowTime, showing what % of time is left
         }
         //
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 
         //check if player is grounded
-        bool groundedNew = Physics.Raycast(orientation.position, -orientation.up, 1.25f, groundMask);
+        bool groundedNew = Physics.SphereCast(orientation.position, 0.25f, -orientation.up, out RaycastHit hit, 1.25f, groundMask);
         grounded = groundedNew;
 
         if (!isInCutscene)
         {
             //get movement input
-            movementInput = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
+            Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
+            movementInput = Vector3.Lerp(movementInput, directionalInputs, 0.06f).normalized * directionalInputs.magnitude;
 
             //get jumping input
             if (Input.GetButtonDown("Jump") && grounded) { jumping = true; }
@@ -126,13 +140,15 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     public void RecoverBalance(float recoveryMod = 1){
+        /*
         balance = new Vector2(
             balance.x > 0.2 ? balance.x - balanceRecoverRate : balance.x + balanceRecoverRate, 
             balance.y > 0.2 ? balance.y - balanceRecoverRate : balance.y + balanceRecoverRate
         );
+        */
 
-        //player.balance = Vector3.Slerp(player.balance, Vector2.zero, player.balanceRecoverRate * recoveryMod);
-        //player.balance = Vector2.SmoothDamp(player.balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
+        balance = Vector3.Slerp(balance, Vector2.zero, balanceRecoverRate * recoveryMod);
+        //balance = Vector2.SmoothDamp(balance, Vector2.zero, ref balanceRecoveryVelocity, 0, player.balanceRecoverRate * recoveryMod);
     }
 
     public IEnumerator Grab(float delay = 0){

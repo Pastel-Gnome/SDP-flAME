@@ -245,6 +245,7 @@ MonoBehaviour:
   requiredPower: 2
   currentPower: 0
   meshRenderer: {fileID: 3504511699552469020}
+  affectedLights: []
   colorA: {r: 0, g: 0, b: 0, a: 1}
   colorB: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1091256490793941746
@@ -404,6 +405,7 @@ MonoBehaviour:
   - {fileID: 3887723668140880639}
   - {fileID: 2043116303951851139}
   maxPowerInput: 2
+  powerHumNoise: {fileID: 8300000, guid: 11f1d2fab85fd0d4eb98203d9de21317, type: 3}
   currentPowerInput: 0
 --- !u!1 &2022527417197064733
 GameObject:
@@ -528,6 +530,7 @@ MonoBehaviour:
   mechanismActions:
   - {fileID: 0}
   maxPowerInput: 1
+  powerHumNoise: {fileID: 0}
   currentPowerInput: 0
 --- !u!1 &2572345003379847158
 GameObject:
@@ -688,4 +691,5 @@ MonoBehaviour:
   mechanismActions:
   - {fileID: 0}
   maxPowerInput: 1
+  powerHumNoise: {fileID: 0}
   currentPowerInput: 0

@@ -8,19 +8,21 @@ public class LanternBehavior : MonoBehaviour
     private bool isPlaced = false;
     private Holdable lantern;
     private LightSource lightSource;
-    private SphereCollider lightArea;
-
-	static private int lightTouchNum;
+    //private SphereCollider lightArea;
+	[SerializeField] private AudioClip[] dropNoise;
+	private AudioSource audioSource;
 
     void Start()
     {
+		audioSource = GetComponent<AudioSource>();
         lantern = GetComponent<Holdable>();
         lightSource = GetComponent<LightSource>();
-        lightArea = GetComponentInChildren<SphereCollider>();
+        //lightArea = GetComponentInChildren<SphereCollider>();
     }
 
 	private void FixedUpdate()
 	{
+		/*
         if(lightSource.currentRange > 0.1f)
         {
 			lightArea.radius = lightSource.currentRange + 0.5f;
@@ -28,8 +30,9 @@ public class LanternBehavior : MonoBehaviour
         {
             lightArea.radius = 0f;
         }
+		*/
 	}
-
+	/*
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.name == "Player")
@@ -54,6 +57,15 @@ public class LanternBehavior : MonoBehaviour
 				other.GetComponent<PlayerBehaviour>().isLit = false;
 			} else if (lightTouchNum < 0)
 			{ Debug.LogError("Somehow subtracted more lantern lights than should exist"); }
+		}
+	}
+	*/
+
+	private void OnCollisionEnter(Collision other) {
+		if(other.gameObject.layer == 3){
+			if(dropNoise.Length > 0){
+				audioSource.PlayOneShot(dropNoise[Random.Range(0, dropNoise.Length)]);
+			}
 		}
 	}
 }
