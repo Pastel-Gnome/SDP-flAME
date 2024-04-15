@@ -65,5 +65,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087048cb18d13a441a8569524082f68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumOfScenes: 3
+  NumOfScenes: 2
   csvFile: {fileID: 4900000, guid: 71c21a7a510072a488df61f3ad8e3b9a, type: 3}
