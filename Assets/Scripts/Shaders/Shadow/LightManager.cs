@@ -36,7 +36,9 @@ public class LightManager : MonoBehaviour
         
         for (int i = 0; i < lightSources.Length; i++)
         {
-            lightSources[i].Charge(chargeSources);
+            if(Application.isPlaying){
+                lightSources[i].Charge(chargeSources);
+            }
             
             if(enableLights){
                 positions[i] = lightSources[i].transform.position;    

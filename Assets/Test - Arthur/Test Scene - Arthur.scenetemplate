@@ -33,6 +33,8 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 2800000, guid: f0a95e0ec0b80fd49b902582b87a6c1d, type: 3}
     instantiationMode: 0
+  - dependency: {fileID: 919132149155446097, guid: 65eef0145fa2e2c428d718c9c7f5828c, type: 3}
+    instantiationMode: 0
   - dependency: {fileID: 2800000, guid: 6ffeede699c0f834593158354044cf30, type: 3}
     instantiationMode: 0
   - dependency: {fileID: 8300000, guid: 7e2b039ec50c2554b8e3c7a6b6891ad6, type: 3}
@@ -73,6 +75,8 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 9100000, guid: 7547ab4efe3eac947ba7cfa8cee44b71, type: 2}
     instantiationMode: 0
+  - dependency: {fileID: 2100000, guid: 8081e248567c20e4c8e13ee1b48660d3, type: 2}
+    instantiationMode: 0
   - dependency: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     instantiationMode: 0
   - dependency: {fileID: 11400000, guid: 575ddce72084c2c4f84a1728ea55554f, type: 2}
@@ -83,6 +87,8 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 919132149155446097, guid: d80c2451e03d5da43ada71442974c5e8, type: 3}
     instantiationMode: 0
+  - dependency: {fileID: 31900000, guid: da1599749da4a7743970eff967e1f4a0, type: 2}
+    instantiationMode: 1
   - dependency: {fileID: 8300000, guid: ee9b66f240d9e0941b93079a2a702fc8, type: 3}
     instantiationMode: 1
   - dependency: {fileID: 8300000, guid: a420205f577b8c54697e2e6dbc3c5ea4, type: 3}
@@ -113,9 +119,9 @@ MonoBehaviour:
     instantiationMode: 1
   - dependency: {fileID: 8300000, guid: 9e5a7fac2461f894c8fde5fa775c9633, type: 3}
     instantiationMode: 1
-  - dependency: {fileID: 2800000, guid: 205063df183e12140b9f8a50b3dfa9de, type: 3}
-    instantiationMode: 0
   - dependency: {fileID: 13400000, guid: 3a8180f7db2c77145a87f4f47f671d24, type: 2}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 205063df183e12140b9f8a50b3dfa9de, type: 3}
     instantiationMode: 0
   - dependency: {fileID: 2100000, guid: c5c51e67e85c1b646923be920ec62475, type: 2}
     instantiationMode: 0

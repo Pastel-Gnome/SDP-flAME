@@ -254,7 +254,7 @@ MonoBehaviour:
   heldObject: {fileID: 0}
   grabRadius: 2
   rb: {fileID: 1108109683815205573}
-  animator: {fileID: 0}
+  animator: {fileID: 9094850205511485790}
   orientation: {fileID: 1242846784025244084}
   placePosition: {fileID: 0}
   capsuleCollider: {fileID: 3974624193622179629}
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLookRange: 0
-  playerBehaviour: {fileID: 0}
+  playerBehaviour: {fileID: 2872205575105862950}
   rigBuilder: {fileID: 8548792918785068967}
 --- !u!1001 &2662471263007610766
 PrefabInstance:
@@ -777,8 +777,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2896824255743011551}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 233e7112d43e1b74fb614cc7ff324522, type: 3}
+  m_Controller: {fileID: 9100000, guid: 7547ab4efe3eac947ba7cfa8cee44b71, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

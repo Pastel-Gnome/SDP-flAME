@@ -166,7 +166,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Arms
     m_StateMachine: {fileID: -1421040947440555235}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: da1599749da4a7743970eff967e1f4a0, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -354,7 +354,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2027304210641249980, guid: ef8fe49b35e96b04dbd06f68b6095139, type: 3}
+  m_Motion: {fileID: -6542563670128511568, guid: ef8fe49b35e96b04dbd06f68b6095139, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
