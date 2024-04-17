@@ -22,22 +22,6 @@ public class DialogueController : MonoBehaviour
         //sprites = new Queue<Sprite>();
     }
 
-    public void StartDialogue(SingleDialogueData dialogueData)
-    {
-        isMulti = false;
-        characterName.text = dialogueData.characterName;
-        //characterImage.sprite = dialogueData.characterSprite;
-
-        sentences.Clear();
-
-        foreach (string sentence in dialogueData.text)
-        {
-            sentences.Enqueue(sentence);
-        }
-
-        DisplayNextSentenceSingleCharacter();
-    }
-
     public void StartMultiDialogue(MultiDialogueData dialogueData, int sceneID)
     {
         isMulti = true;
