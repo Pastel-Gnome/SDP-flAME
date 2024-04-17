@@ -29,7 +29,7 @@ public class State_Run : PlayerState
     {
         base.FixedUpdate();
 
-        player.Step(timeSinceLastStep);
+        timeSinceLastStep = player.Step(timeSinceLastStep);
 
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * (player.grounded ? 1 : 0.25f) * (player.heldObject ? 0.8f: 1f), ForceMode.Force);
         

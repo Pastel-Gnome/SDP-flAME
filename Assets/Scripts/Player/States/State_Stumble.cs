@@ -36,7 +36,7 @@ public class State_Stumble : PlayerState
     {
         base.FixedUpdate();
 
-        player.Step(timeSinceLastStep);
+        timeSinceLastStep = player.Step(timeSinceLastStep);
 
         player.rb.AddForce(stumbleInput * 2);
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);

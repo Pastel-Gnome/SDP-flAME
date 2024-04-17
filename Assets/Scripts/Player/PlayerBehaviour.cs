@@ -204,13 +204,14 @@ public class PlayerBehaviour : MonoBehaviour
         SaveManager.LoadJsonData();
     }
 
-    public void Step(float timeSinceLastStep){
+    public float Step(float timeSinceLastStep){
         if(timeSinceLastStep < stepTimer){
-            timeSinceLastStep += Time.deltaTime;
+            timeSinceLastStep += Time.fixedDeltaTime;
         }
         else{
             timeSinceLastStep = 0;
             audioSource.PlayOneShot(footstepsAudio[UnityEngine.Random.Range(0, footstepsAudio.Length)]);
         }
+        return timeSinceLastStep;
     }
 }
