@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class State_Run : PlayerState
 {
+    private float timeSinceLastStep;
+
     public State_Run(PlayerBehaviour playerNew) : base(playerNew){
     }
 
@@ -15,6 +17,7 @@ public class State_Run : PlayerState
             //new Transition_Balance(player, new State_Trip(player, player.getupDuration), 90)
         };
         transitions = transitionsNew;
+        timeSinceLastStep = player.stepTimer;
     }
 
     public override void Update()
@@ -25,7 +28,11 @@ public class State_Run : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        player.Step(timeSinceLastStep);
+
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * (player.grounded ? 1 : 0.25f) * (player.heldObject ? 0.8f: 1f), ForceMode.Force);
+        
         player.RecoverBalance(0.5f);
     }
 

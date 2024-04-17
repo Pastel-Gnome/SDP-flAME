@@ -172,6 +172,8 @@ MonoBehaviour:
   decay: 0
   holdable: {fileID: 0}
   chargeRange: 0
+  decorLight: {fileID: 0}
+  decorEmissive: {fileID: 0}
 --- !u!1 &205313229
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2838985424569859846, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2840589373997769826, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1145,11 +1147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7576768797950821256, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000002721111
+      value: -0.0000027568235
       objectReference: {fileID: 0}
     - target: {fileID: 7576768797950821256, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000006423672
+      value: 0.00000065079763
       objectReference: {fileID: 0}
     - target: {fileID: 7576768797950821256, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1157,7 +1159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7576768797950821256, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.22975293
+      value: 0.22975291
       objectReference: {fileID: 0}
     - target: {fileID: 7623825836881920554, guid: 1237b5d7b71253a48ad4b4b9c984697e, type: 3}
       propertyPath: m_XAxis.Value

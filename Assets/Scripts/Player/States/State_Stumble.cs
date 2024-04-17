@@ -7,6 +7,7 @@ public class State_Stumble : PlayerState
     private float duration;
     private Vector3 stumbleInput;
     private PlayerState previousState;
+    private float timeSinceLastStep;
 
     public State_Stumble(PlayerBehaviour playerNew, PlayerState previousStateNew) : base(playerNew){
         previousState = previousStateNew;
@@ -14,7 +15,7 @@ public class State_Stumble : PlayerState
 
     public override void Chosen(){
         if(previousState is State_Jump state_Jump){
-            duration = state_Jump.jumpTimeElapsed;
+            duration = state_Jump.jumpTimeElapsed * 2;
             stumbleInput = new Vector3(player.rb.velocity.x, 0, player.rb.velocity.z);
         }
 
@@ -23,6 +24,7 @@ public class State_Stumble : PlayerState
             new Transition_Timer(player, new State_Stand(player), duration)
         };
         transitions = transitionsNew;
+        timeSinceLastStep = player.stepTimer;
     }
 
     public override void Update()
@@ -33,6 +35,9 @@ public class State_Stumble : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        player.Step(timeSinceLastStep);
+
         player.rb.AddForce(stumbleInput * 2);
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 

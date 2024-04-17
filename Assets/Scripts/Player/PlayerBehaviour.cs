@@ -26,6 +26,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Holder holder;
     private Slider TempDarknessIndicator;
     private PlayerState currentPlayerState;
+    public AudioSource audioSource;
 	[Header("player stats")]
 	public float balanceRecoverRate;
     public float runSpeed;
@@ -45,6 +46,10 @@ public class PlayerBehaviour : MonoBehaviour
     public bool isLit;
     public bool isInCutscene;
 
+    [Header("player sounds")]
+    public AudioClip[] footstepsAudio;
+    public float stepTimer;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -57,6 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
             TempDarknessIndicator.gameObject.SetActive(false);
         }
         grounded = true;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -67,6 +73,7 @@ public class PlayerBehaviour : MonoBehaviour
             horizontalSpeed = 0;
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
+
         animator.SetFloat("Horizontal_Speed", horizontalSpeed);
         animator.SetBool("grounded", grounded);
         animator.transform.forward = Vector3.Slerp(animator.transform.forward, movementInput, Time.deltaTime * 10);
@@ -195,5 +202,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SaveManager.LoadJsonData();
+    }
+
+    public void Step(float timeSinceLastStep){
+        if(timeSinceLastStep < stepTimer){
+            timeSinceLastStep += Time.deltaTime;
+        }
+        else{
+            timeSinceLastStep = 0;
+            audioSource.PlayOneShot(footstepsAudio[UnityEngine.Random.Range(0, footstepsAudio.Length)]);
+        }
     }
 }
