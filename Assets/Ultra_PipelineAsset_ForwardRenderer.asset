@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shadows
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 450
+  injectionPoint: 550
   fetchColorBuffer: 1
   requirements: -1
   passMaterial: {fileID: 2100000, guid: 8d1648799a49f3f44b50dae7dd5e2dc6, type: 2}
@@ -72,7 +72,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
+  m_RenderingMode: 1
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: PlayerHurt
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 450
+  injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: 390abcdbe77dd1b438f6ca59dc6ad4d1, type: 2}

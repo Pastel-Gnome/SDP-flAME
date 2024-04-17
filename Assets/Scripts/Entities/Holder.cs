@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Holder : PowerSource
 {
-    public Mechanism[] powerOutput;
     public bool canBeGrabbed;
     public bool providesCharge;
     public Transform carryAnchor;

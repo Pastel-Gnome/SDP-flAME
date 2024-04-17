@@ -32,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float maxRunSpeed;
     public float jumpSpeed;
     public float jumpDuration;
+    public float dropSpeed;
     public float getupDuration;
     public float grabTime;
     public float maxShadowTime = -999;
@@ -55,11 +56,19 @@ public class PlayerBehaviour : MonoBehaviour
         {
             TempDarknessIndicator.gameObject.SetActive(false);
         }
+        grounded = true;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        float horizontalSpeed = new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
+        if(horizontalSpeed < 0.05f){
+            horizontalSpeed = 0;
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        }
+        animator.SetFloat("Horizontal_Speed", horizontalSpeed);
+        animator.SetBool("grounded", grounded);
         animator.transform.forward = Vector3.Slerp(animator.transform.forward, movementInput, Time.deltaTime * 10);
 
         float shadowPercent = (maxShadowTime - shadowTimer) * 2/maxShadowTime;
@@ -94,10 +103,6 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (!isInCutscene)
         {
-            //get movement input
-            Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
-            movementInput = Vector3.Lerp(movementInput, directionalInputs, 0.06f).normalized * directionalInputs.magnitude;
-
             //get jumping input
             if (Input.GetButtonDown("Jump") && grounded) { jumping = true; }
 
@@ -121,12 +126,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        if (!isInCutscene)
+        {
+            //get movement input
+            Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
+            movementInput = Vector3.Lerp(movementInput, directionalInputs, 0.25f).normalized * directionalInputs.magnitude;
+        }
+
         currentPlayerState.FixedUpdate();
     }
 
     public void SetPlayerState(PlayerState currentPlayerStateNew)
     {
-        print(currentPlayerState + " -> " + currentPlayerStateNew);
+        //print(currentPlayerState + " -> " + currentPlayerStateNew);
 
         currentPlayerState?.OnExitState();
 

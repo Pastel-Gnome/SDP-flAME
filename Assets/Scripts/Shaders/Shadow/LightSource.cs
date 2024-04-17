@@ -9,9 +9,20 @@ public class LightSource : MonoBehaviour
     public float decay = 0.01f;
     public Holdable holdable;
     [SerializeField] private float chargeRange = 2;
+    [SerializeField] private Light decorLight;
+    [SerializeField] private MeshRenderer decorEmissive;
+    private float maxDecorLightLevel;
+
+    private void Awake(){
+        LightManager.i.lightSources.Add(this);
+    }
 
     private void Start() {
         TryGetComponent(out Holdable newHoldable);
+        if(decorLight){
+            maxDecorLightLevel = decorLight.intensity;
+        }
+        
         holdable = newHoldable;
     }
 
@@ -27,7 +38,7 @@ public class LightSource : MonoBehaviour
         }
 
         foreach(Transform j in chargeSources){
-            if(Vector2.Distance(transform.position, j.position) < chargeRange){
+            if(Vector3.Distance(transform.position, j.position) < chargeRange){
                 foundChargeSource = true;
                 break;
             }
@@ -35,5 +46,11 @@ public class LightSource : MonoBehaviour
 
         currentRange = foundChargeSource ? Mathf.Lerp(currentRange, maxRange, 0.01f) : currentRange -= decay;
         currentRange = currentRange < 0 ? 0 : currentRange;
+        if(decorLight){
+            decorLight.intensity = Mathf.Lerp(0f, maxDecorLightLevel, currentRange/maxRange);
+        }
+        if(decorEmissive){
+            decorEmissive.material.color = Color.Lerp(Color.black, Color.white, currentRange/maxRange);
+        }
     }
 }

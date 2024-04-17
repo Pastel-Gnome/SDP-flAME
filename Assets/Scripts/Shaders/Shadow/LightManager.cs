@@ -10,7 +10,7 @@ public class LightManager : MonoBehaviour
     public static LightManager i;
     [SerializeField] private bool enableLights = true;
     Material shadowMaterial;
-    public LightSource[] lightSources;
+    public List<LightSource> lightSources = new();
     [SerializeField] private Transform[] chargeSources;
     private Vector4[] positions = new Vector4[100];
     private float[] ranges = new float[100];
@@ -24,17 +24,11 @@ public class LightManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        lightSources = GetComponentsInChildren<LightSource>();
-    }
-
     // Update is called once per frame
     private void Update()
     {
         
-        for (int i = 0; i < lightSources.Length; i++)
+        for (int i = 0; i < lightSources.Count; i++)
         {
             if(Application.isPlaying){
                 lightSources[i].Charge(chargeSources);
@@ -53,7 +47,7 @@ public class LightManager : MonoBehaviour
         
         Shader.SetGlobalFloatArray("_Ranges", ranges);
         Shader.SetGlobalVectorArray("_Positions", positions);
-        Shader.SetGlobalFloat("_PositionArray", lightSources.Length);
+        Shader.SetGlobalFloat("_PositionArray", lightSources.Count);
     }
 
     public float CalculateLightAtPoint(Vector3 targetPosition){

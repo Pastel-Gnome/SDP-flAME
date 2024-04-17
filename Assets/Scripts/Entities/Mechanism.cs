@@ -19,6 +19,7 @@ public class Mechanism : MonoBehaviour
         if(powerHumNoise){
             powerHumVolume = powerHumAudioSource.volume;
             powerHumAudioSource.clip = powerHumNoise;
+            powerHumAudioSource.spatialBlend = 1;
             powerHumAudioSource.Play();
         }
         

@@ -12,7 +12,7 @@ public class State_Run : PlayerState
             new Transition_NoMovement(player, new State_Stand(player)),
             new Transition_Jumping(player, new State_Jump(player)),
             new Transition_Grabbing(player, new State_Grab(player), new State_Place(player)),
-            new Transition_Balance(player, new State_Trip(player, player.getupDuration), 90)
+            //new Transition_Balance(player, new State_Trip(player, player.getupDuration), 90)
         };
         transitions = transitionsNew;
     }
@@ -25,16 +25,14 @@ public class State_Run : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        player.rb.AddForce(player.movementInput.normalized * player.runSpeed * (player.grounded ? 1 : 0.25f) * Mathf.Max((player.shadowTimer/player.maxShadowTime), 0.25f), ForceMode.Force);
+        player.rb.AddForce(player.movementInput.normalized * player.runSpeed * (player.grounded ? 1 : 0.25f) * (player.heldObject ? 0.8f: 1f), ForceMode.Force);
         player.RecoverBalance(0.5f);
     }
 
     public override void OnEnterState()
     {
         base.OnEnterState();
-
-        player.animator.Play("Run");
+        player.animator.SetTrigger("Go_Run");
         player.SetColliderMaterial(player.groundFriction);
     }
 

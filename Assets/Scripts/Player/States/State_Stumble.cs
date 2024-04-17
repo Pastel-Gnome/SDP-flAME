@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class State_Stumble : PlayerState
 {
-    private float duration = 0.5f;
+    private float duration;
     private Vector3 stumbleInput;
+    private PlayerState previousState;
 
-    public State_Stumble(PlayerBehaviour playerNew, float durationNew, Vector3 stumbleInputNew) : base(playerNew){
-        duration = durationNew;
-        stumbleInput = stumbleInputNew;
+    public State_Stumble(PlayerBehaviour playerNew, PlayerState previousStateNew) : base(playerNew){
+        previousState = previousStateNew;
     }
 
     public override void Chosen(){
+        if(previousState is State_Jump state_Jump){
+            duration = state_Jump.jumpTimeElapsed;
+            stumbleInput = new Vector3(player.rb.velocity.x, 0, player.rb.velocity.z);
+        }
+
         PlayerTransition[] transitionsNew = {
             new Transition_Jumping(player, new State_Jump(player)),
             new Transition_Timer(player, new State_Stand(player), duration)
@@ -28,8 +33,7 @@ public class State_Stumble : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        player.rb.AddForce(stumbleInput);
+        player.rb.AddForce(stumbleInput * 2);
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
         player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.1f;
@@ -40,10 +44,10 @@ public class State_Stumble : PlayerState
     {
         base.OnEnterState();
 
-        player.animator.Play("Stumble");
+        player.animator.SetTrigger("Go_Stumble");
         player.SetColliderMaterial(player.airFriction);
         
-        Debug.Log(stumbleInput);
+        //Debug.Log(stumbleInput);
     }
 
     public override void OnExitState()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class State_Jump : PlayerState
 {
-    private float jumpTimeElapsed;
+    public float jumpTimeElapsed;
     private Vector2 balanceBuildup;
 
     public State_Jump(PlayerBehaviour playerNew) : base(playerNew){
@@ -13,7 +13,8 @@ public class State_Jump : PlayerState
 
     public override void Chosen(){
         PlayerTransition[] transitionsNew = {
-            new Transition_Landing(player, new State_Stumble(player, jumpTimeElapsed * 2, new Vector3(player.rb.velocity.x, 0, player.rb.velocity.z)))
+            new Transition_Landing(player, new State_Stumble(player, this))
+            //new Transition_Landing(player, new State_Stand(player))
         };
         transitions = transitionsNew;
     }
@@ -41,6 +42,9 @@ public class State_Jump : PlayerState
         if(player.jumping){
             player.rb.AddForce(player.orientation.up * player.jumpSpeed, ForceMode.Impulse);
         }
+        else if(!Input.GetButton("Jump")){
+            player.rb.AddForce(-player.orientation.up * player.dropSpeed, ForceMode.Impulse);
+        }
 
         balanceBuildup += new Vector2(player.movementInput.x, player.movementInput.z).normalized * 0.05f;
     }
@@ -49,7 +53,7 @@ public class State_Jump : PlayerState
     {
         base.OnEnterState();
 
-        player.animator.Play("Jump");
+        player.animator.SetTrigger("Go_Jump");
         player.SetColliderMaterial(player.airFriction);
 
         player.jumping = true;

@@ -189,8 +189,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3794467380528052979}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.8078455, y: 0.081345774, z: -0.058485184, w: 0.58081675}
+  m_LocalPosition: {x: 0.006, y: 0.012, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -267,13 +267,14 @@ MonoBehaviour:
   holder: {fileID: 7703108917301576292}
   balanceRecoverRate: 1
   runSpeed: 60
-  maxRunSpeed: 4
-  jumpSpeed: 1
-  jumpDuration: 0.2
+  maxRunSpeed: 6
+  jumpSpeed: 2
+  jumpDuration: 0.1
+  dropSpeed: 0.25
   getupDuration: 1
   grabTime: 0.35
-  maxShadowTime: -999
-  shadowTimer: 0
+  maxShadowTime: 5
+  shadowTimer: 5
   grounded: 0
   jumping: 0
   grabbing: 0
@@ -348,8 +349,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.22
-  m_Height: 1.95
+  m_Radius: 0.25
+  m_Height: 1.9
   m_Direction: 1
   m_Center: {x: 0, y: 1.01, z: 0}
 --- !u!114 &7703108917301576292
@@ -365,7 +366,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPower: 0
-  powerOutput: []
   canBeGrabbed: 0
   providesCharge: 1
   carryAnchor: {fileID: 1857360165927931643}
