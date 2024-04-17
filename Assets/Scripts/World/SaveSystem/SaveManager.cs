@@ -66,7 +66,7 @@ public class SaveManager : MonoBehaviour
 
 	void SetupSceneData(Scene currScene)
 	{
-		if (currScene.path == "Assets/Scenes/Game Areas/" + currScene.name || currScene.path.Contains("Test - "))
+		if (currScene.path.Contains("Game Areas") || currScene.path.Contains("Test - "))
 		{
 			if (saveSlot == -99) { saveSlot = 1; }
 
