@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6885afe7ee5043f479149748ad7be275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRange: 8
-  maxRange: 8
+  currentRange: 5
+  maxRange: 5
   decay: 0.005
   holdable: {fileID: 0}
   chargeRange: 2
@@ -335,7 +335,7 @@ Transform:
   m_GameObject: {fileID: 9111040565148116476}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.38268277, z: -0, w: 0.92387986}
-  m_LocalPosition: {x: 0, y: 0.083, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.30000004, y: 0.3, z: 0.30000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -354,7 +354,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.7894441, b: 0.60754716, a: 1}
   m_Intensity: 2
-  m_Range: 20
+  m_Range: 18
   m_SpotAngle: 179
   m_InnerSpotAngle: 1
   m_CookieSize: 20

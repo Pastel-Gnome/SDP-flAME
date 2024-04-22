@@ -23,7 +23,7 @@ public class State_Grab : PlayerState
     {
         base.FixedUpdate();
 
-        player.rb.AddForce(player.movementInput.normalized * (player.runSpeed * 0.5f) * (player.grounded ? 1 : 0.25f), ForceMode.Force);
+        player.rb.AddForce(player.movementInput.normalized * (player.runSpeed * 0.5f) * (player.grounded.collider ? 1 : 0.25f), ForceMode.Force);
     }
 
     

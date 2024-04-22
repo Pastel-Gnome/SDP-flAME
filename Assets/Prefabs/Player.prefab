@@ -273,12 +273,11 @@ MonoBehaviour:
   maxRunSpeed: 6.25
   jumpSpeed: 2
   jumpDuration: 0.1
-  dropSpeed: 0.25
+  dropSpeed: 0.3
   getupDuration: 1
   grabTime: 0.35
   maxShadowTime: 5
   shadowTimer: 5
-  grounded: 0
   jumping: 0
   grabbing: 0
   isLit: 0

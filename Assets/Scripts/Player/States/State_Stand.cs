@@ -12,6 +12,7 @@ public class State_Stand : PlayerState
             new Transition_Movement(player, new State_Run(player)),
             new Transition_Jumping(player, new State_Jump(player)),
             new Transition_Grabbing(player, new State_Grab(player), new State_Place(player)),
+            new Transition_UnGrounded(player, new State_Jump(player))
             //new Transition_Balance(player, new State_Trip(player, player.getupDuration), 90)
         };
         transitions = transitionsNew;

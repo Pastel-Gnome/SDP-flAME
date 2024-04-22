@@ -40,7 +40,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float shadowTimer;
 
     [Header("player bools")]
-    public bool grounded;
+    public RaycastHit grounded;
     public bool jumping;
     public bool grabbing;
     public bool isLit;
@@ -49,6 +49,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("player sounds")]
     public AudioClip[] footstepsAudio;
     public float stepTimer;
+    private bool connectedWithGround;
 
     // Start is called before the first frame update
     private void Start()
@@ -61,7 +62,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             TempDarknessIndicator.gameObject.SetActive(false);
         }
-        grounded = true;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -75,8 +75,8 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         animator.SetFloat("Horizontal_Speed", horizontalSpeed);
-        animator.SetBool("grounded", grounded);
-        animator.transform.forward = Vector3.Slerp(animator.transform.forward, movementInput, Time.deltaTime * 10);
+        animator.SetBool("grounded", grounded.collider);
+        animator.transform.forward = Vector3.Slerp(animator.transform.forward, new Vector3(movementInput.x, 0, movementInput.z), Time.deltaTime * 10);
 
         float shadowPercent = (maxShadowTime - shadowTimer) * 2/maxShadowTime;
         AudioManager.i.SetDangerLevel(shadowPercent);
@@ -105,13 +105,13 @@ public class PlayerBehaviour : MonoBehaviour
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 
         //check if player is grounded
-        bool groundedNew = Physics.SphereCast(orientation.position, 0.25f, -orientation.up, out RaycastHit hit, 1.25f, groundMask);
-        grounded = groundedNew;
+        Physics.SphereCast(rb.position, 0.25f, -rb.transform.up, out RaycastHit hit, 1.5f, groundMask);
+        grounded = hit;
 
         if (!isInCutscene)
         {
             //get jumping input
-            if (Input.GetButtonDown("Jump") && grounded) { jumping = true; }
+            if (Input.GetButtonDown("Jump") && grounded.collider) { jumping = true; }
 
             //pick up lantern
             if (Input.GetButtonDown("Grab")) { grabbing = true; }
@@ -124,10 +124,15 @@ public class PlayerBehaviour : MonoBehaviour
             //set plumb bob rotation. might move this to a different script later, we'll see
             plumbBob.eulerAngles = new Vector3(balance.x, 90, balance.y);
             plumbBobRoot.localEulerAngles = new Vector3(0, plumbBobRoot.eulerAngles.y + 4, 0);
-
             balance = Vector2.ClampMagnitude(balance, 100);
-
             currentPlayerState.Update();
+        }
+
+        if(!jumping && !grounded.collider && !connectedWithGround){
+            bool nearGround = Physics.Raycast(rb.position, -rb.transform.up, 2, groundMask);
+            if(nearGround){
+                rb.AddForce(-rb.transform.up * dropSpeed * 5, ForceMode.VelocityChange);
+            }
         }
     }
 
@@ -137,7 +142,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             //get movement input
             Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
-            movementInput = Vector3.Lerp(movementInput, directionalInputs, 0.25f).normalized * directionalInputs.magnitude;
+            movementInput = Vector3.Slerp(movementInput, directionalInputs, 0.25f).normalized * directionalInputs.magnitude;
         }
 
         currentPlayerState.FixedUpdate();
@@ -174,9 +179,9 @@ public class PlayerBehaviour : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         Transform closestGrab = null;
-        Collider[] grabHits = Physics.OverlapSphere(orientation.position, grabRadius, holdableMask);
+        Collider[] grabHits = Physics.OverlapSphere(rb.position, grabRadius, holdableMask);
         foreach(Collider i in grabHits){
-            if(closestGrab == null || Vector3.Distance(i.transform.position, orientation.position) < Vector3.Distance(closestGrab.position, orientation.position)){
+            if(closestGrab == null || Vector3.Distance(i.transform.position, rb.position) < Vector3.Distance(closestGrab.position, rb.position)){
                 closestGrab = i.transform;
             }
         }
@@ -208,10 +213,18 @@ public class PlayerBehaviour : MonoBehaviour
         if(timeSinceLastStep < stepTimer){
             timeSinceLastStep += Time.fixedDeltaTime;
         }
-        else{
+        else if(new Vector2(rb.velocity.x, rb.velocity.z).magnitude > 0.1f){
             timeSinceLastStep = 0;
             audioSource.PlayOneShot(footstepsAudio[UnityEngine.Random.Range(0, footstepsAudio.Length)]);
         }
         return timeSinceLastStep;
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        connectedWithGround = true;
+    }
+
+    private void OnCollisionExit(Collision other) {
+        connectedWithGround = false;
     }
 }

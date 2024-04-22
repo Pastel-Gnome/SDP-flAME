@@ -11,9 +11,13 @@ public class LightSource : MonoBehaviour
     [SerializeField] private float chargeRange = 2;
     [SerializeField] private Light decorLight;
     [SerializeField] private MeshRenderer decorEmissive;
+    [SerializeField] private AudioClip illuminateNoise;
     private float maxDecorLightLevel;
+    private AudioSource audioSource;
 
     private void Awake(){
+        TryGetComponent(out AudioSource audioSourceNew);
+        audioSource = audioSourceNew;
         LightManager.i.lightSources.Add(this);
     }
 
@@ -42,6 +46,10 @@ public class LightSource : MonoBehaviour
                 foundChargeSource = true;
                 break;
             }
+        }
+
+        if(illuminateNoise && audioSource && currentRange == 0 && foundChargeSource){
+            audioSource.PlayOneShot(illuminateNoise);
         }
 
         currentRange = foundChargeSource ? Mathf.Lerp(currentRange, maxRange, 0.01f) : currentRange -= decay;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -7,6 +8,9 @@ public class State_Jump : PlayerState
 {
     public float jumpTimeElapsed;
     private Vector2 balanceBuildup;
+    private int index;
+    private float timeElapsed;
+    private int jumpImpulses, jumpImpulsesMax;
 
     public State_Jump(PlayerBehaviour playerNew) : base(playerNew){
     }
@@ -26,9 +30,19 @@ public class State_Jump : PlayerState
         if(Input.GetButton("Jump") && jumpTimeElapsed < player.jumpDuration){
             player.jumping = true;
             jumpTimeElapsed += Time.deltaTime;
+            //timeElapsed += Time.deltaTime;
         }       
         else{
-            player.jumping = false;
+            if(player.jumping){
+                /*
+                Debug.Log("jump " + index + ": " + timeElapsed + ", jumpImpulses: " + jumpImpulses);
+                timeElapsed = 0;
+                index++;
+                */
+                if(jumpImpulses == jumpImpulsesMax-1 && Input.GetButton("Jump")){player.rb.AddForce(Vector3.up * player.jumpSpeed, ForceMode.Impulse);}
+                jumpImpulses = 0;
+                player.jumping = false;
+            }
             jumpTimeElapsed = player.jumpDuration;
         }
     }
@@ -40,10 +54,12 @@ public class State_Jump : PlayerState
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
         if(player.jumping){
-            player.rb.AddForce(player.orientation.up * player.jumpSpeed, ForceMode.Impulse);
+            player.rb.AddForce(Vector3.up * player.jumpSpeed, ForceMode.Impulse);
+            jumpImpulses++;
+            if(jumpImpulses > jumpImpulsesMax){jumpImpulsesMax = jumpImpulses;}
         }
         else if(!Input.GetButton("Jump")){
-            player.rb.AddForce(-player.orientation.up * player.dropSpeed, ForceMode.Impulse);
+            player.rb.AddForce(-Vector3.up * player.dropSpeed, ForceMode.Impulse);
         }
 
         balanceBuildup += new Vector2(player.movementInput.x, player.movementInput.z).normalized * 0.05f;
@@ -65,4 +81,6 @@ public class State_Jump : PlayerState
 
         base.OnExitState();
     }
+
+
 }

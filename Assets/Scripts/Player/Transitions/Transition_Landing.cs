@@ -8,12 +8,11 @@ public class Transition_Landing : PlayerTransition
     }
 
     protected override bool Listener(){
-        return player.grounded && !player.jumping;
+        return player.grounded.collider && !player.jumping;
     }
 
     public override void Transition()
     {
-        Debug.Log("hitting the ground");
         base.Transition();
     }
 }
