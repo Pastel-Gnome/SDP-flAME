@@ -2536,48 +2536,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1242846784025244084, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1819165649099096345, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_Height
-      value: 1.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 1819165649099096345, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
-      propertyPath: m_Radius
-      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 1824372541490105547, guid: 330fe33dcb21bb842887a412f37698ef, type: 3}
       propertyPath: m_Data.m_MaxLimit
