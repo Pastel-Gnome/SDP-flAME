@@ -22,6 +22,7 @@ public class CutsceneSteps : MonoBehaviour
 	private MultiDialogueData dialogueData;
 	private Image fadeoutObj;
 	private PlayerBehaviour player;
+	private bool playerDetected = false;
 
 	private void Start()
 	{
@@ -35,8 +36,9 @@ public class CutsceneSteps : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.name == "Player" && !sceneStarted)
+		if (other.name == "Player" && !sceneStarted && !playerDetected)
 		{
+			playerDetected = true;
 			currStep = 0;
 			StartCoroutine(FadeOut());
 			HaltPlayer(other.transform);
@@ -85,6 +87,7 @@ public class CutsceneSteps : MonoBehaviour
 	private void EndCutscene()
 	{
 		sceneStarted = false;
+		playerDetected = false;
 		SaveManager.PostCutsceneSave(nextActiveScene);
 		SceneManager.LoadSceneAsync(nextActiveScene);
 	}
@@ -189,7 +192,7 @@ public class CutsceneSteps : MonoBehaviour
 	{
 		other.position = new Vector3(standSpot.position.x, other.position.y, standSpot.position.z);
 		other.rotation = standSpot.rotation;
-		other.GetComponent<Rigidbody>().isKinematic = true;
+		other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
 		player = other.GetComponent<PlayerBehaviour>();
 		player.isInCutscene = true;
 		player.SetPlayerState(new State_Stand(player));
