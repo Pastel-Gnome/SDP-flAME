@@ -271,8 +271,8 @@ MonoBehaviour:
   balanceRecoverRate: 1
   runSpeed: 60
   maxRunSpeed: 6.25
-  jumpSpeed: 2
-  jumpDuration: 0.1
+  jumpSpeed: 2.3
+  jumpImpulsesMax: 5
   dropSpeed: 0.3
   getupDuration: 1
   grabTime: 0.35

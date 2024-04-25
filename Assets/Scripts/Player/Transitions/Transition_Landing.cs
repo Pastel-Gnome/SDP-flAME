@@ -8,7 +8,7 @@ public class Transition_Landing : PlayerTransition
     }
 
     protected override bool Listener(){
-        return player.grounded.collider && !player.jumping;
+        return player.grounded.collider && !player.jumping && player.rb.velocity.y <= 0;
     }
 
     public override void Transition()

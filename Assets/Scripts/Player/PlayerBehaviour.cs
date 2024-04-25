@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +30,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float runSpeed;
     public float maxRunSpeed;
     public float jumpSpeed;
-    public float jumpDuration;
+    public int jumpImpulsesMax;
     public float dropSpeed;
     public float getupDuration;
     public float grabTime;
@@ -105,7 +103,7 @@ public class PlayerBehaviour : MonoBehaviour
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 
         //check if player is grounded
-        Physics.SphereCast(rb.position, 0.25f, -rb.transform.up, out RaycastHit hit, 1.5f, groundMask);
+        Physics.SphereCast(rb.position, 0.25f, -rb.transform.up, out RaycastHit hit, 1.3f, groundMask);
         grounded = hit;
 
         if (!isInCutscene)
@@ -127,13 +125,6 @@ public class PlayerBehaviour : MonoBehaviour
             balance = Vector2.ClampMagnitude(balance, 100);
             currentPlayerState.Update();
         }
-
-        if(!jumping && !grounded.collider && !connectedWithGround){
-            bool nearGround = Physics.Raycast(rb.position, -rb.transform.up, 2, groundMask);
-            if(nearGround){
-                rb.AddForce(-rb.transform.up * dropSpeed * 5, ForceMode.VelocityChange);
-            }
-        }
     }
 
     private void FixedUpdate() 
@@ -150,7 +141,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetPlayerState(PlayerState currentPlayerStateNew)
     {
-        //print(currentPlayerState + " -> " + currentPlayerStateNew);
+        print(currentPlayerState + " -> " + currentPlayerStateNew);
 
         currentPlayerState?.OnExitState();
 
