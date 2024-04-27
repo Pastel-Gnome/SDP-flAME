@@ -46,8 +46,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("player sounds")]
     public AudioClip[] footstepsAudio;
+    public AudioClip[] jumpAudio;
+    public AudioClip[] landAudio;
+    public AudioClip[] grabAudio;
     public float stepTimer;
     private bool connectedWithGround;
+    private float currentMagnitude;
 
     // Start is called before the first frame update
     private void Start()
@@ -133,7 +137,10 @@ public class PlayerBehaviour : MonoBehaviour
         {
             //get movement input
             Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
-            movementInput = Vector3.Slerp(movementInput, directionalInputs, 0.25f).normalized * directionalInputs.magnitude;
+            currentMagnitude = directionalInputs.magnitude > 0 ? Mathf.Lerp(currentMagnitude, directionalInputs.magnitude, 0.05f): Mathf.Lerp(currentMagnitude, directionalInputs.magnitude, 0.5f);
+            currentMagnitude = currentMagnitude < 0.05f ? 0 : currentMagnitude;
+            print("current magnitude: " + currentMagnitude);
+            movementInput = Vector3.Slerp(movementInput, directionalInputs, 0.25f).normalized * currentMagnitude;
         }
 
         currentPlayerState.FixedUpdate();
@@ -141,7 +148,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void SetPlayerState(PlayerState currentPlayerStateNew)
     {
-        print(currentPlayerState + " -> " + currentPlayerStateNew);
+        //print(currentPlayerState + " -> " + currentPlayerStateNew);
 
         currentPlayerState?.OnExitState();
 

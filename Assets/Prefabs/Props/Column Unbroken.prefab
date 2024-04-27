@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4541661191496176919}
   - component: {fileID: 2279352830491691070}
   - component: {fileID: 2736699816042130046}
-  - component: {fileID: 4087781225938101388}
+  - component: {fileID: 3031049564167365051}
   m_Layer: 3
   m_Name: Column Unbroken
   m_TagString: Untagged
@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4600
+  m_VersionIndex: 4603
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1599,8 +1599,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6025846690374438555}
   m_Mesh: {fileID: 0}
---- !u!64 &4087781225938101388
-MeshCollider:
+--- !u!136 &3031049564167365051
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1617,7 +1617,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: -1.15, y: 0.5, z: -1}
