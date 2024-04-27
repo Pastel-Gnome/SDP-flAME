@@ -94,6 +94,10 @@ public class SaveManager : MonoBehaviour
 			newGameParent = MainMenuParent.Find("New Game Column").GetComponent<RectTransform>();
 			continueGameParent = MainMenuParent.Find("Continue Game Column").GetComponent<RectTransform>();
 			newGameConfirmScreen = newGameParent.Find("NewGame Confirmation Screen").GetComponent<RectTransform>();
+
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+
 			LoadJson_MainMenu();
 		}
 	}

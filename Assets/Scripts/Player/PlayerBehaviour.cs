@@ -22,7 +22,6 @@ public class PlayerBehaviour : MonoBehaviour
     public PhysicMaterial groundFriction;
     public PhysicMaterial airFriction;
     [SerializeField] private Holder holder;
-    private Slider TempDarknessIndicator;
     private PlayerState currentPlayerState;
     public AudioSource audioSource;
 	[Header("player stats")]
@@ -55,11 +54,6 @@ public class PlayerBehaviour : MonoBehaviour
         currentPlayerState = new State_Stand(this);
         currentPlayerState.Chosen();
 
-        TempDarknessIndicator = plumbBob.parent.GetComponentInChildren<Slider>();
-        if(maxShadowTime == -999)
-        {
-            TempDarknessIndicator.gameObject.SetActive(false);
-        }
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -96,9 +90,6 @@ public class PlayerBehaviour : MonoBehaviour
 			shadowTimer += Time.deltaTime;
 		}
 
-        if (maxShadowTime != -999){
-            TempDarknessIndicator.value = shadowTimer / maxShadowTime; // slider value is a fraction of maxShadowTime, showing what % of time is left
-        }
         //
         //Shader.SetGlobalFloatArray("_ShadowLevel", shadowLevel);
 
