@@ -9,22 +9,17 @@ public class DialogueController : MonoBehaviour
 
     public TMP_Text characterName;
     public TMP_Text dialogueText;
-    //public Image characterImage;
 
     private Queue<string> sentences;
     private Queue<string> names;
-    //private Queue<Sprite> sprites;
-    private bool isMulti = false;
     void Start()
     {
         sentences = new Queue<string>();
         names = new Queue<string>();
-        //sprites = new Queue<Sprite>();
     }
 
     public void StartMultiDialogue(MultiDialogueData dialogueData, int sceneID)
     {
-        isMulti = true;
         if (dialogueData == null)
         {
             Debug.LogWarning("Dialogue Data is null. Cannot start dialogue.");
@@ -42,10 +37,8 @@ public class DialogueController : MonoBehaviour
         foreach (MultiDialogueData.DialogueEntry entry in dialogueData.dialogueEntries[sceneID-1])
         {
             characterName.text = entry.characterName;
-            //characterImage.sprite = entry.characterSprite;
             sentences.Enqueue(entry.text);
             names.Enqueue(entry.characterName);
-            //sprites.Enqueue(entry.characterSprite);
 
         }
 
@@ -75,9 +68,6 @@ public class DialogueController : MonoBehaviour
         dialogueText.text = sentence;
         string name = names.Dequeue();
         characterName.text = name;
-        //Sprite sprite = sprites.Dequeue();
-        //characterImage.sprite = sprite;
-        Debug.Log("Displaying: " + name);
     }
 
     void EndDialogue()

@@ -90,6 +90,14 @@ public class SaveManager : MonoBehaviour
 		}
 		else if (currScene.name == "Main Menu")
 		{
+			Transform MainMenuParent = GameObject.Find("Canvas").transform;
+			newGameParent = MainMenuParent.Find("New Game Column").GetComponent<RectTransform>();
+			continueGameParent = MainMenuParent.Find("Continue Game Column").GetComponent<RectTransform>();
+			newGameConfirmScreen = newGameParent.Find("NewGame Confirmation Screen").GetComponent<RectTransform>();
+
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+
 			LoadJson_MainMenu();
 		}
 	}
@@ -166,15 +174,11 @@ public class SaveManager : MonoBehaviour
 			}
 			else
 			{
-				if (SceneManager.GetActiveScene().name != "Main Menu")
-				{
-					SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-				}
-				else
-				{
-					SceneManager.LoadSceneAsync("whiteboxlevel1");
-				}
+				SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
 			}
+		} else
+		{
+			SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
 		}
 	}
 

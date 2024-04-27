@@ -5,7 +5,6 @@ using UnityEngine;
 public class LanternBehavior : MonoBehaviour
 {
 
-    private bool isPlaced = false;
     private Holdable lantern;
     private LightSource lightSource;
     //private SphereCollider lightArea;
