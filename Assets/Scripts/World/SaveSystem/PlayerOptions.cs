@@ -8,7 +8,7 @@ public class PlayerOptions : MonoBehaviour
 {
 	[Header("Video Options Objects")]
 	public Toggle windowedToggle;
-	public TMP_Dropdown aspectRatioDropdown;
+	public TMP_Dropdown resolutionDropdown;
 
 	[Header("Game Options Objects")]
 	public TMP_Dropdown darknessTypeDropdown;
@@ -22,8 +22,8 @@ public class PlayerOptions : MonoBehaviour
 	bool windowed = true;
 	int darknessType = 0; // 0 for default, 1 for minimal, 2 for bright
 
-	int aspectChoice = 0;
-	int[] aspectRatio = {16, 9};
+	int resolutionChoice = 0;
+	int[] resolution = { 1920, 1080 };
 
 	float masterVolume = 0.7f;
 	//float musicVolume = 1f;
@@ -47,7 +47,7 @@ public class PlayerOptions : MonoBehaviour
 
 		darknessTypeDropdown.value = darknessType;
 
-		aspectRatioDropdown.value = aspectChoice;
+		resolutionDropdown.value = resolutionChoice;
 
 		masterSlider.value = masterVolume;
 		//musicSlider.value = musicVolume;
@@ -57,16 +57,7 @@ public class PlayerOptions : MonoBehaviour
 
 	private void GameSetup()
 	{
-		int w = aspectRatio[0];
-		int h = aspectRatio[1];
-		if ((((float)Screen.width) / ((float)Screen.height)) > w / h)
-		{
-			Screen.SetResolution((int)(((float)Screen.height) * (w / h)), Screen.height, !windowed);
-		}
-		else
-		{
-			Screen.SetResolution(Screen.width, (int)(((float)Screen.width) * (h / w)), !windowed);
-		}
+		SetResolution();
 
 	}
 
@@ -75,14 +66,15 @@ public class PlayerOptions : MonoBehaviour
 		windowed = windowedToggle.isOn;
 		darknessType = darknessTypeDropdown.value;
 
-		aspectChoice = aspectRatioDropdown.value;
-		string[] tempAspectRatio = aspectRatioDropdown.captionText.text.Split(":");
-		if (int.TryParse(tempAspectRatio[0], out int i)){
-			aspectRatio[0] = i;
+		resolutionChoice = resolutionDropdown.value;
+		string[] tempAspectRatio = resolutionDropdown.captionText.text.Split(" x ");
+		if (int.TryParse(tempAspectRatio[0], out int i))
+		{
+			resolution[0] = i;
 		}
 		if (int.TryParse(tempAspectRatio[1], out int j))
 		{
-			aspectRatio[1] = j;
+			resolution[1] = j;
 		}
 
 		masterVolume = masterSlider.value;
@@ -98,9 +90,9 @@ public class PlayerOptions : MonoBehaviour
 		PlayerPrefs.SetInt("windowed", windowed ? 1 : 0);
 		PlayerPrefs.SetInt("darknessType", darknessType);
 
-		PlayerPrefs.SetInt("aspectChoice", aspectChoice);
-		PlayerPrefs.SetInt("aspectX", aspectRatio[0]);
-		PlayerPrefs.SetInt("aspectY", aspectRatio[1]);
+		PlayerPrefs.SetInt("resolutionChoice", resolutionChoice);
+		PlayerPrefs.SetInt("resX", resolution[0]);
+		PlayerPrefs.SetInt("resY", resolution[1]);
 
 		PlayerPrefs.SetFloat("masterVol", masterVolume);
 		//PlayerPrefs.SetFloat("musicVol", musicVolume);
@@ -116,9 +108,9 @@ public class PlayerOptions : MonoBehaviour
 
 		darknessType = PlayerPrefs.GetInt("darknessType", 0);
 
-		aspectChoice = PlayerPrefs.GetInt("aspectChoice", 0);
-		aspectRatio[0] = PlayerPrefs.GetInt("aspectX", 16);
-		aspectRatio[1] = PlayerPrefs.GetInt("aspectY", 9);
+		resolutionChoice = PlayerPrefs.GetInt("resolutionChoice", 0);
+		resolution[0] = PlayerPrefs.GetInt("resX", 1920);
+		resolution[1] = PlayerPrefs.GetInt("resY", 1080);
 
 		masterVolume = PlayerPrefs.GetFloat("masterVol", 0.7f);
 		//musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
@@ -129,5 +121,13 @@ public class PlayerOptions : MonoBehaviour
 	public void SaveOptionPrefs()
 	{
 		PlayerPrefs.Save();
+		SetResolution();
+	}
+
+	public void SetResolution()
+	{
+		int w = resolution[0];
+		int h = resolution[1];
+		Screen.SetResolution(resolution[0], resolution[1], !windowed);
 	}
 }
