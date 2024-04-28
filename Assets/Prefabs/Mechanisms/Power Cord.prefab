@@ -169,7 +169,7 @@ MonoBehaviour:
   powerSources: []
   mechanismActions:
   - {fileID: 8403348873629719396}
-  maxPowerInput: 0
+  maxPowerInput: 1
   powerHumNoise: {fileID: 8300000, guid: 11f1d2fab85fd0d4eb98203d9de21317, type: 3}
   currentPowerInput: 0
 --- !u!82 &4605484927251999757

@@ -25,6 +25,10 @@ public class SaveManager : MonoBehaviour
 	public Transform continueGameParent;
 	public Transform newGameConfirmScreen;
 
+	float masterVolume = 0.7f;
+	float sfxVolume = 1f;
+	float ambientVolume = 1f;
+
 	private void Awake()
 	{
 		if (instance != null & instance != this)
@@ -75,6 +79,13 @@ public class SaveManager : MonoBehaviour
 			lanterns = lightParent.GetChild(0).GetComponentsInChildren<LightSource>();
 			holders = lightParent.GetChild(1).GetComponentsInChildren<Holder>();
 			checkpointParent = GameObject.Find("Checkpoints").transform;
+
+			masterVolume = PlayerPrefs.GetFloat("masterVol", 0.7f);
+			sfxVolume = PlayerPrefs.GetFloat("sfxVol", 1f);
+			ambientVolume = PlayerPrefs.GetFloat("ambientVol", 1f);
+			AudioManager.i.masterVolume = masterVolume;
+			AudioManager.i.ambienceVolume = ambientVolume;
+			AudioManager.i.sfxVolume = sfxVolume;
 
 			Holdable[] holdables = FindObjectsByType<Holdable>(FindObjectsSortMode.None);
 			foreach (Holdable h in holdables)

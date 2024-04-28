@@ -245,7 +245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: -360}
+  m_AnchoredPosition: {x: 40, y: -240}
   m_SizeDelta: {x: 1000, y: 139}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &68399617
@@ -2910,7 +2910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: baca577ba70a22c49b9964cb9150952a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 64b300341dde21840804ff6c6940cb0c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4088,7 +4088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &656852772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6100,7 +6100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: -240}
+  m_AnchoredPosition: {x: 40, y: -120}
   m_SizeDelta: {x: 1000, y: 139}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &983644761
@@ -6212,6 +6212,7 @@ GameObject:
   - component: {fileID: 996624806}
   - component: {fileID: 996624805}
   - component: {fileID: 996624804}
+  - component: {fileID: 996624807}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -6282,7 +6283,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 996624805}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 996624807}
+        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
+        m_MethodName: CloseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &996624805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6321,6 +6334,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996624802}
   m_CullTransparentMesh: 1
+--- !u!114 &996624807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996624802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec97cf8a92dfee948a9fcb61f7a6bd9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1009316305
 GameObject:
   m_ObjectHideFlags: 0
@@ -11630,7 +11655,6 @@ MonoBehaviour:
   aspectRatioDropdown: {fileID: 90256839}
   darknessTypeDropdown: {fileID: 783468493}
   masterSlider: {fileID: 254908101}
-  musicSlider: {fileID: 1773112907}
   sfxSlider: {fileID: 242527039}
   ambientSlider: {fileID: 907754585}
 --- !u!1 &2034439002

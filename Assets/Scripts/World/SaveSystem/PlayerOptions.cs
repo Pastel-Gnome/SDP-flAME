@@ -15,7 +15,7 @@ public class PlayerOptions : MonoBehaviour
 
 	[Header("Audio Options Objects")]
 	public Slider masterSlider;
-	public Slider musicSlider;
+	//public Slider musicSlider;
 	public Slider sfxSlider;
 	public Slider ambientSlider;
 
@@ -26,13 +26,17 @@ public class PlayerOptions : MonoBehaviour
 	int[] aspectRatio = {16, 9};
 
 	float masterVolume = 0.7f;
-	float musicVolume = 1f;
+	//float musicVolume = 1f;
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
 
+	SaveManager saveManager;
+
 	private void Start()
 	{
+		saveManager = FindFirstObjectByType<SaveManager>();
 		GetOptionValues();
+		GameSetup();
 	}
 
 	public void GetOptionValues()
@@ -40,18 +44,30 @@ public class PlayerOptions : MonoBehaviour
 		GetOptionPrefs();
 
 		windowedToggle.isOn = windowed;
-		// set windowed mode
+
 		darknessTypeDropdown.value = darknessType;
-		// add darkness type info to game manager
 
 		aspectRatioDropdown.value = aspectChoice;
-		// set aspect ratio of game
 
 		masterSlider.value = masterVolume;
-		musicSlider.value = musicVolume;
+		//musicSlider.value = musicVolume;
 		sfxSlider.value = sfxVolume;
 		ambientSlider.value = ambientVolume;
-		// add audio info to game/audio manager
+	}
+
+	private void GameSetup()
+	{
+		int w = aspectRatio[0];
+		int h = aspectRatio[1];
+		if ((((float)Screen.width) / ((float)Screen.height)) > w / h)
+		{
+			Screen.SetResolution((int)(((float)Screen.height) * (w / h)), Screen.height, !windowed);
+		}
+		else
+		{
+			Screen.SetResolution(Screen.width, (int)(((float)Screen.width) * (h / w)), !windowed);
+		}
+
 	}
 
 	public void SetOptionValues()
@@ -70,7 +86,7 @@ public class PlayerOptions : MonoBehaviour
 		}
 
 		masterVolume = masterSlider.value;
-		musicVolume = musicSlider.value;
+		//musicVolume = musicSlider.value;
 		sfxVolume = sfxSlider.value;
 		ambientVolume = ambientSlider.value;
 
@@ -87,7 +103,7 @@ public class PlayerOptions : MonoBehaviour
 		PlayerPrefs.SetInt("aspectY", aspectRatio[1]);
 
 		PlayerPrefs.SetFloat("masterVol", masterVolume);
-		PlayerPrefs.SetFloat("musicVol", musicVolume);
+		//PlayerPrefs.SetFloat("musicVol", musicVolume);
 		PlayerPrefs.SetFloat("sfxVol", sfxVolume);
 		PlayerPrefs.SetFloat("ambientVol", ambientVolume);
 	}
@@ -105,7 +121,7 @@ public class PlayerOptions : MonoBehaviour
 		aspectRatio[1] = PlayerPrefs.GetInt("aspectY", 9);
 
 		masterVolume = PlayerPrefs.GetFloat("masterVol", 0.7f);
-		musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
+		//musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
 		sfxVolume = PlayerPrefs.GetFloat("sfxVol", 1f);
 		ambientVolume = PlayerPrefs.GetFloat("ambientVol", 1f);
 	}

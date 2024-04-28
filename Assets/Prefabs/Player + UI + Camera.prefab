@@ -1017,6 +1017,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   caveAudio: {fileID: 4826177347512701225}
   dangerAudio: {fileID: 7848786730358374208}
+  audioMixer: {fileID: 24100000, guid: 048ab0ffba9446b4486a74a46ae87974, type: 2}
+  masterVolume: 0
+  ambienceVolume: 0
+  sfxVolume: 0
 --- !u!1 &4098314395981246092
 GameObject:
   m_ObjectHideFlags: 3
