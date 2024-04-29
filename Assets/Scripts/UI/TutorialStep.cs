@@ -17,13 +17,17 @@ public class TutorialStep : MonoBehaviour
 		{
 			if (thisStep == 0)
 			{
-				ui.StartWalkText();
+				ui.StartIntroText();
 			}
 			else if (thisStep == 1)
 			{
-				ui.StartInteractText();
+				ui.StartWalkText();
 			}
 			else if (thisStep == 2)
+			{
+				ui.StartInteractText();
+			}
+			else if (thisStep == 3)
 			{
 				ui.StartJumpText();
 			}

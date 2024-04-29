@@ -6,7 +6,8 @@ public class PowerBulb : MechanismAction
 {
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Light[] affectedLights;
-    float[] affectedLightStartValues;
+    [SerializeField] private LightSource[] affectedMechanicalLights;
+    [SerializeField] float[] affectedLightStartValues;
     [SerializeField] private Color colorA, colorB;
     
     // Start is called before the first frame update
@@ -32,6 +33,10 @@ public class PowerBulb : MechanismAction
         meshRenderer.material.color = Color.Lerp(colorA, colorB, currentPower);
         for(int i = 0; i < affectedLights.Length; i++){
             affectedLights[i].intensity = Mathf.Lerp(0, affectedLightStartValues[i], currentPower);
+        }
+
+        for(int i = 0; i < affectedMechanicalLights.Length; i++){
+            affectedMechanicalLights[i].currentRange = Mathf.Lerp(0, affectedMechanicalLights[i].maxRange, currentPower);
         }
     }
 }

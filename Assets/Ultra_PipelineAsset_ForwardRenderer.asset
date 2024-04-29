@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shadows
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 550
+  injectionPoint: 450
   fetchColorBuffer: 1
   requirements: -1
   passMaterial: {fileID: 2100000, guid: 8d1648799a49f3f44b50dae7dd5e2dc6, type: 2}

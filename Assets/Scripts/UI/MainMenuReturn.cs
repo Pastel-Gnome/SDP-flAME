@@ -16,12 +16,14 @@ public class MainMenuReturn : MonoBehaviour
 			{
 				if (SceneManager.GetActiveScene().name != "Main Menu")
 				{
+					//StartCoroutine(SaveManager.instance.SetMenuMusic(1, 0.5f));
 					escTimer = 0;
 					SceneManager.LoadSceneAsync("Main Menu");
 				}
 			}
 		} else if (Input.GetKeyUp(KeyCode.Escape))
 		{
+			//StartCoroutine(SaveManager.instance.SetMenuMusic(0, 0.5f));
 			escTimer = 0;
 		}
 	}

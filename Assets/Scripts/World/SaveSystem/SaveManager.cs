@@ -30,6 +30,7 @@ public class SaveManager : MonoBehaviour
 	float masterVolume = 0.7f;
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
+	[SerializeField] private AudioSource menuMusic;
 
 	private void Awake()
 	{
@@ -41,13 +42,14 @@ public class SaveManager : MonoBehaviour
 		{
 			instance = this;
 		}
-
+		
 		SceneManager.sceneLoaded += OnSceneLoaded;
 		DontDestroyOnLoad(instance);
 	}
 
 	void OnSceneLoaded(Scene currScene, LoadSceneMode loadMode)
 	{
+		StartCoroutine(SetMenuMusic(SceneManager.GetActiveScene().name == "Main Menu" ? 1 : 0, 1f));
 		SetupSceneData(currScene);
 	}
 
@@ -56,7 +58,6 @@ public class SaveManager : MonoBehaviour
 		if (LoadFromFile("torchlight" + saveSlot + ".dat", out var jsonFile))
 		{
 			saveData.LoadFromJson(jsonFile);
-
 			SceneManager.LoadSceneAsync(saveData.sceneName);
 		}
 		else
@@ -310,5 +311,15 @@ public class SaveManager : MonoBehaviour
 		{
 			OpenScene();
 		}
+	}
+
+	public IEnumerator SetMenuMusic(float newVolume, float duration){
+		float startVolume = menuMusic.volume;
+		float timeElapsed = 0;
+		while(timeElapsed < duration){
+			timeElapsed += Time.deltaTime;
+			menuMusic.volume = Mathf.Lerp(startVolume, newVolume, timeElapsed/duration);
+		}
+		yield return new WaitForFixedUpdate();
 	}
 }

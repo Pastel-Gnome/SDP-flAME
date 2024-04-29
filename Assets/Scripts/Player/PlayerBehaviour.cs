@@ -52,6 +52,8 @@ public class PlayerBehaviour : MonoBehaviour
     public float stepTimer;
     private bool connectedWithGround;
     private float currentMagnitude;
+    public bool intro;
+    public float introShadow;
 
     // Start is called before the first frame update
     private void Start()
@@ -77,10 +79,23 @@ public class PlayerBehaviour : MonoBehaviour
         animator.SetFloat("Horizontal_Speed", horizontalSpeed);
         animator.SetBool("grounded", grounded.collider);
         animator.transform.forward = Vector3.Slerp(animator.transform.forward, new Vector3(movementInput.x, 0, movementInput.z), Time.deltaTime * 10);
+        
+        float shadowPercent;
 
-        float shadowPercent = (maxShadowTime - shadowTimer) * 2/maxShadowTime;
+        if(intro){
+            shadowPercent = 2.5f;
+        }
+        else if(introShadow > 0){
+            introShadow -= Time.deltaTime;
+            shadowPercent = introShadow;
+        }
+        else{
+            shadowPercent = (maxShadowTime - shadowTimer) * 2/maxShadowTime;
+        }
+        
         AudioManager.i.SetDangerLevel(shadowPercent);
         Shader.SetGlobalFloat("_PlayerShadowLevel", shadowPercent);
+        
 
         //check if player is lit
         isLit = LightManager.i.CalculateLightAtPoint(rb.transform.position) < 1f;
@@ -89,7 +104,7 @@ public class PlayerBehaviour : MonoBehaviour
         
         if (!isLit && maxShadowTime != -999 && shadowTimer > 0){
             shadowTimer -= Time.deltaTime;
-            if (shadowTimer <= 0) { 
+            if (!intro && shadowTimer <= 0) { 
                 Debug.Log("Player has been in darkness too long. Game Over"); 
                 StartCoroutine(Die(0.5f)); 
                 shadowTimer = 0; 

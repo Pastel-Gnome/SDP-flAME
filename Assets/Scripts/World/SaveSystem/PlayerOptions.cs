@@ -22,7 +22,7 @@ public class PlayerOptions : MonoBehaviour
 	public Slider ambientSlider;
 
 	bool windowed = true;
-	bool mouseInvertX = false;
+	bool mouseInvertX = true;
 	bool mouseInvertY = false;
 	int darknessType = 0; // 0 for default, 1 for minimal, 2 for bright
 

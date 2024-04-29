@@ -1,37 +1,63 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System;
 
 public class TutorialUI : MonoBehaviour
 {
-    public GameObject pressIndicator;
-    public TMP_Text pressText;
+    [SerializeField] private Image bgGradient, indicator;
+    public GameObject container;
+    public TMP_Text pressText, storyText;
+    PlayerBehaviour playerRef;
 
-    public void ShowIndicator()
-    {
-        pressIndicator.SetActive(true);
+    private void Start() {
+        playerRef = SaveManager.instance.player.GetComponent<PlayerBehaviour>();
+    }
+
+    public void StartIntroText(){
+        StartCoroutine(Fade(5f, 1, true));
+        StartCoroutine(FadeStory(0.5f, 1));
+        playerRef.intro = true;
+        pressText.text = "Continue";
+        StartCoroutine(anyKeyListener());
     }
 
     public void StartJumpText()
     {
-        ShowIndicator();
+        StartCoroutine(Fade(0.5f, 1, true));
         pressText.text = "[SPACE]";
         StartCoroutine(JumpListener());
     }
 
     public void StartInteractText()
     {
-        ShowIndicator();
+        StartCoroutine(Fade(0.5f, 1, true));
         pressText.text = "[E]";
 		StartCoroutine(InteractListener());
 	}
 
     public void StartWalkText()
     {
-        ShowIndicator();
+        StartCoroutine(Fade(0.5f, 1, true));
         pressText.text = "[WASD]";
 		StartCoroutine(WalkListener());
 	}
+
+    private IEnumerator anyKeyListener()
+    {
+        float timeElapsed = 0;
+        while (!Input.anyKeyDown || timeElapsed < 4)
+        {
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        StartCoroutine(FadeStory(0.5f, 0));
+        StartWalkText();
+        
+        playerRef.intro = false;
+        playerRef.introShadow = 2.25f;
+    }
 
     private IEnumerator JumpListener()
     {
@@ -39,7 +65,7 @@ public class TutorialUI : MonoBehaviour
         {
             yield return null;
         }
-        pressIndicator.SetActive(false);
+        StartCoroutine(Fade(0.25f, 0, false));
     }
 
     private IEnumerator InteractListener()
@@ -48,7 +74,7 @@ public class TutorialUI : MonoBehaviour
         {
             yield return null;
         }
-        pressIndicator.SetActive(false);
+        StartCoroutine(Fade(0.25f, 0, false));
     }
 
 	private IEnumerator WalkListener()
@@ -57,6 +83,37 @@ public class TutorialUI : MonoBehaviour
 		{
 			yield return null;
 		}
-		pressIndicator.SetActive(false);
+		StartCoroutine(Fade(0.25f, 0, false));
 	}
+
+    private IEnumerator Fade(float duration, float targetOpacity, bool finishState){
+        float timeElapsed = 0;
+        float startOpacity = bgGradient.color.a;
+        if(finishState){
+            container.SetActive(true);
+        }
+        while (timeElapsed < duration){
+            timeElapsed += Time.deltaTime;
+            float currentOpacity = Mathf.Lerp(startOpacity, targetOpacity, Mathf.Min(timeElapsed- (duration-1), 1)/1);
+            bgGradient.color = new Color(bgGradient.color.r, bgGradient.color.g, bgGradient.color.b, currentOpacity);
+            indicator.color = new Color(indicator.color.r, indicator.color.g, indicator.color.b, currentOpacity);
+            pressText.color = new Color(pressText.color.r, pressText.color.g, pressText.color.b, currentOpacity);
+            yield return new WaitForEndOfFrame();
+        }
+        if(!finishState){
+            container.SetActive(false);
+        }
+    }
+
+    private IEnumerator FadeStory(float duration, float targetOpacity){
+        float timeElapsed = 0;
+        float startOpacity = storyText.color.a;
+        
+        while (timeElapsed < duration){
+            timeElapsed += Time.deltaTime;
+            float currentOpacity = Mathf.Lerp(startOpacity, targetOpacity, Mathf.Min(timeElapsed-(duration-1), 1)/1);
+            storyText.color = new Color(storyText.color.r, storyText.color.g, storyText.color.b, currentOpacity);
+            yield return new WaitForEndOfFrame();
+        }
+    }
 }

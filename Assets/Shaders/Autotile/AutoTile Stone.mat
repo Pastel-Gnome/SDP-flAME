@@ -70,9 +70,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Metalic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scale: 0.2
+    - _Smoothness: 0.295
     - _TileTop: 0
     - _TopBlend: 0
     - _rotate_top_with_object: 0
