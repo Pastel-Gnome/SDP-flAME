@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -59,7 +60,10 @@ public class PlayerBehaviour : MonoBehaviour
         currentPlayerState.Chosen();
 
         audioSource = GetComponent<AudioSource>();
-    }
+        CinemachineFreeLook playerCamera = this.transform.parent.GetComponentInChildren<CinemachineFreeLook>();
+        playerCamera.m_XAxis.m_InvertInput = SaveManager.instance.mouseInvertX;
+		playerCamera.m_YAxis.m_InvertInput = SaveManager.instance.mouseInvertY;
+	}
 
     // Update is called once per frame
     private void Update()

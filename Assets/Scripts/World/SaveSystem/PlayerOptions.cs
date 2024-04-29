@@ -11,6 +11,8 @@ public class PlayerOptions : MonoBehaviour
 	public TMP_Dropdown resolutionDropdown;
 
 	[Header("Game Options Objects")]
+	public Toggle mouseInvertXToggle;
+	public Toggle mouseInvertYToggle;
 	public TMP_Dropdown darknessTypeDropdown;
 
 	[Header("Audio Options Objects")]
@@ -20,6 +22,8 @@ public class PlayerOptions : MonoBehaviour
 	public Slider ambientSlider;
 
 	bool windowed = true;
+	bool mouseInvertX = false;
+	bool mouseInvertY = false;
 	int darknessType = 0; // 0 for default, 1 for minimal, 2 for bright
 
 	int resolutionChoice = 0;
@@ -30,11 +34,8 @@ public class PlayerOptions : MonoBehaviour
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
 
-	SaveManager saveManager;
-
 	private void Start()
 	{
-		saveManager = FindFirstObjectByType<SaveManager>();
 		GetOptionValues();
 		GameSetup();
 	}
@@ -44,6 +45,8 @@ public class PlayerOptions : MonoBehaviour
 		GetOptionPrefs();
 
 		windowedToggle.isOn = windowed;
+		mouseInvertXToggle.isOn = mouseInvertX;
+		mouseInvertYToggle.isOn = mouseInvertY;
 
 		darknessTypeDropdown.value = darknessType;
 
@@ -58,12 +61,16 @@ public class PlayerOptions : MonoBehaviour
 	private void GameSetup()
 	{
 		SetResolution();
-
+		SaveManager.instance.mouseInvertX = mouseInvertX;
+		SaveManager.instance.mouseInvertY = !mouseInvertY;
 	}
 
 	public void SetOptionValues()
 	{
 		windowed = windowedToggle.isOn;
+		mouseInvertX = mouseInvertXToggle.isOn;
+		mouseInvertY = mouseInvertYToggle.isOn;
+
 		darknessType = darknessTypeDropdown.value;
 
 		resolutionChoice = resolutionDropdown.value;
@@ -88,6 +95,8 @@ public class PlayerOptions : MonoBehaviour
 	private void SetOptionPrefs()
 	{
 		PlayerPrefs.SetInt("windowed", windowed ? 1 : 0);
+		PlayerPrefs.SetInt("invertMouseX", mouseInvertX ? 1 : 0);
+		PlayerPrefs.SetInt("invertMouseY", mouseInvertY ? 1 : 0);
 		PlayerPrefs.SetInt("darknessType", darknessType);
 
 		PlayerPrefs.SetInt("resolutionChoice", resolutionChoice);
@@ -102,10 +111,16 @@ public class PlayerOptions : MonoBehaviour
 
 	private void GetOptionPrefs()
 	{
-		int tempInt = 0;
-		tempInt = PlayerPrefs.GetInt("windowed", 1);
-		windowed = (tempInt == 1);
+		int _windowInt = 0;
+		_windowInt = PlayerPrefs.GetInt("windowed", 1);
+		windowed = (_windowInt == 1);
 
+		int _invertXInt = 0;
+		_invertXInt = PlayerPrefs.GetInt("invertMouseX", 0);
+		mouseInvertX = (_invertXInt == 1);
+		int _invertYInt = 0;
+		_invertYInt = PlayerPrefs.GetInt("invertMouseY", 0);
+		mouseInvertY = (_invertYInt == 1);
 		darknessType = PlayerPrefs.GetInt("darknessType", 0);
 
 		resolutionChoice = PlayerPrefs.GetInt("resolutionChoice", 0);
@@ -121,7 +136,7 @@ public class PlayerOptions : MonoBehaviour
 	public void SaveOptionPrefs()
 	{
 		PlayerPrefs.Save();
-		SetResolution();
+		GameSetup();
 	}
 
 	public void SetResolution()

@@ -27,7 +27,7 @@ public class CutsceneSteps : MonoBehaviour
 	private void Start()
 	{
 		DiaControl = cutscenePanel.parent.GetComponent<DialogueController>();
-		dialogueData = FindFirstObjectByType<SaveManager>().GetComponent<MultiDialogueData>();
+		dialogueData = SaveManager.instance.GetComponent<MultiDialogueData>();
 		fadeoutObj = cutscenePanel.transform.parent.GetChild(1).GetComponent<Image>();
 
 		cutscenePanel.gameObject.SetActive(false);

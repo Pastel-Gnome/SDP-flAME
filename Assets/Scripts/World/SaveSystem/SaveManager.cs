@@ -25,6 +25,8 @@ public class SaveManager : MonoBehaviour
 	public Transform continueGameParent;
 	public Transform newGameConfirmScreen;
 
+	public bool mouseInvertX = false;
+	public bool mouseInvertY = false;
 	float masterVolume = 0.7f;
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
