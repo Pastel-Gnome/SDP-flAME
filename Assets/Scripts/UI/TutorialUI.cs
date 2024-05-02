@@ -19,7 +19,7 @@ public class TutorialUI : MonoBehaviour
         StartCoroutine(Fade(5f, 1, true));
         StartCoroutine(FadeStory(0.5f, 1));
         playerRef.intro = true;
-        pressText.text = "Continue";
+        pressText.text = " Press Any Key ";
         StartCoroutine(anyKeyListener());
     }
 
