@@ -41,7 +41,7 @@ public class State_Stumble : PlayerState
         timeSinceLastStep = player.Step(timeSinceLastStep);
 
         timeElapsed += Time.fixedDeltaTime;
-        player.rb.AddForce(stumbleInput.normalized * -(duration - timeElapsed/duration), ForceMode.Impulse);
+        player.rb.AddForce((stumbleInput.normalized + (Vector3.one * 0.1f)) * -(duration - timeElapsed/duration), ForceMode.Impulse);
         player.rb.AddForce(player.movementInput.normalized * player.runSpeed * 0.25f, ForceMode.Force);
 
         player.balance += new Vector2(stumbleInput.x, stumbleInput.z).normalized * 0.1f;
