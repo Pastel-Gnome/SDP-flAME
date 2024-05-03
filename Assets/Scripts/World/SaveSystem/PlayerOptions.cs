@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class PlayerOptions : MonoBehaviour
 {
@@ -13,13 +15,13 @@ public class PlayerOptions : MonoBehaviour
 	[Header("Game Options Objects")]
 	public Toggle mouseInvertXToggle;
 	public Toggle mouseInvertYToggle;
-	public TMP_Dropdown darknessTypeDropdown;
 
 	[Header("Audio Options Objects")]
 	public Slider masterSlider;
-	//public Slider musicSlider;
+	public Slider musicSlider;
 	public Slider sfxSlider;
 	public Slider ambientSlider;
+	public AudioMixer audioMixer;
 
 	bool windowed = true;
 	bool mouseInvertX = true;
@@ -30,14 +32,18 @@ public class PlayerOptions : MonoBehaviour
 	int[] resolution = { 1920, 1080 };
 
 	float masterVolume = 0.7f;
-	//float musicVolume = 1f;
+	float musicVolume = 1f;
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
+
+	AudioSource menuMusic;
 
 	private void Start()
 	{
 		GetOptionValues();
 		GameSetup();
+		menuMusic = SaveManager.instance.GetComponent<AudioSource>();
+		StartCoroutine(SetMenuMusic(SceneManager.GetActiveScene().name == "Main Menu" ? 1 : 0, 1f));
 	}
 
 	public void GetOptionValues()
@@ -48,14 +54,17 @@ public class PlayerOptions : MonoBehaviour
 		mouseInvertXToggle.isOn = mouseInvertX;
 		mouseInvertYToggle.isOn = mouseInvertY;
 
-		darknessTypeDropdown.value = darknessType;
-
 		resolutionDropdown.value = resolutionChoice;
 
 		masterSlider.value = masterVolume;
-		//musicSlider.value = musicVolume;
+		musicSlider.value = musicVolume;
 		sfxSlider.value = sfxVolume;
 		ambientSlider.value = ambientVolume;
+
+		masterSlider.value = Mathf.InverseLerp(0.0001f, 1.2f, masterVolume);
+		musicSlider.value = Mathf.InverseLerp(0.0001f, 1f, musicVolume);
+		sfxSlider.value = Mathf.InverseLerp(0.0001f, 1f, sfxVolume);
+		ambientSlider.value = Mathf.InverseLerp(0.0001f, 1f, ambientVolume);
 	}
 
 	private void GameSetup()
@@ -63,6 +72,10 @@ public class PlayerOptions : MonoBehaviour
 		SetResolution();
 		SaveManager.instance.mouseInvertX = mouseInvertX;
 		SaveManager.instance.mouseInvertY = !mouseInvertY;
+		audioMixer.SetFloat("MasterVolume", Mathf.Log(masterVolume) * 20);
+		audioMixer.SetFloat("AmbientVolume", Mathf.Log(ambientVolume) * 20);
+		audioMixer.SetFloat("MusicVolume", Mathf.Log(musicVolume) * 20);
+		audioMixer.SetFloat("SFXVolume", Mathf.Log(sfxVolume) * 20);
 	}
 
 	public void SetOptionValues()
@@ -70,8 +83,6 @@ public class PlayerOptions : MonoBehaviour
 		windowed = windowedToggle.isOn;
 		mouseInvertX = mouseInvertXToggle.isOn;
 		mouseInvertY = mouseInvertYToggle.isOn;
-
-		darknessType = darknessTypeDropdown.value;
 
 		resolutionChoice = resolutionDropdown.value;
 		string[] tempAspectRatio = resolutionDropdown.captionText.text.Split(" x ");
@@ -84,10 +95,10 @@ public class PlayerOptions : MonoBehaviour
 			resolution[1] = j;
 		}
 
-		masterVolume = masterSlider.value;
-		//musicVolume = musicSlider.value;
-		sfxVolume = sfxSlider.value;
-		ambientVolume = ambientSlider.value;
+		masterVolume = Mathf.Lerp(0.0001f, 1.2f, masterSlider.value);
+		musicVolume = Mathf.Lerp(0.0001f, 1f, musicSlider.value);
+		sfxVolume = Mathf.Lerp(0.0001f, 1f, sfxSlider.value);
+		ambientVolume = Mathf.Lerp(0.0001f, 1f, ambientSlider.value);
 
 		SetOptionPrefs();
 	}
@@ -104,7 +115,7 @@ public class PlayerOptions : MonoBehaviour
 		PlayerPrefs.SetInt("resY", resolution[1]);
 
 		PlayerPrefs.SetFloat("masterVol", masterVolume);
-		//PlayerPrefs.SetFloat("musicVol", musicVolume);
+		PlayerPrefs.SetFloat("musicVol", musicVolume);
 		PlayerPrefs.SetFloat("sfxVol", sfxVolume);
 		PlayerPrefs.SetFloat("ambientVol", ambientVolume);
 	}
@@ -127,8 +138,8 @@ public class PlayerOptions : MonoBehaviour
 		resolution[0] = PlayerPrefs.GetInt("resX", 1920);
 		resolution[1] = PlayerPrefs.GetInt("resY", 1080);
 
-		masterVolume = PlayerPrefs.GetFloat("masterVol", 0.7f);
-		//musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
+		masterVolume = PlayerPrefs.GetFloat("masterVol", Mathf.Lerp(0.0001f, 1.2f, 0.7f));
+		musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
 		sfxVolume = PlayerPrefs.GetFloat("sfxVol", 1f);
 		ambientVolume = PlayerPrefs.GetFloat("ambientVol", 1f);
 	}
@@ -144,5 +155,17 @@ public class PlayerOptions : MonoBehaviour
 		int w = resolution[0];
 		int h = resolution[1];
 		Screen.SetResolution(resolution[0], resolution[1], !windowed);
+	}
+
+	public IEnumerator SetMenuMusic(float newVolume, float duration)
+	{
+		float startVolume = menuMusic.volume;
+		float timeElapsed = 0;
+		while (timeElapsed < duration)
+		{
+			timeElapsed += Time.deltaTime;
+			menuMusic.volume = Mathf.Lerp(startVolume, newVolume, timeElapsed / duration);
+		}
+		yield return new WaitForFixedUpdate();
 	}
 }

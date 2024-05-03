@@ -10,7 +10,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource dangerAudio;
     public AudioMixer audioMixer;
     public float masterVolume;
-    public float ambienceVolume;
+    public float ambientVolume;
+    public float musicVolume;
     public float sfxVolume;
 	private float dangerAudioBaseLevel;
     private void Awake() {
@@ -24,10 +25,10 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        audioMixer.SetFloat("MasterVolume", 5.47f  + (80 * (masterVolume - 1)));
-        audioMixer.SetFloat("AmbientVolume", -0.06f + (80 * (ambienceVolume - 1)));
-		audioMixer.SetFloat("MusicVolume", -5.24f + (80 * (ambienceVolume - 1)));
-		audioMixer.SetFloat("SFXVolume", -9.93f + (80 * (sfxVolume - 1)));
+        audioMixer.SetFloat("MasterVolume", Mathf.Log(masterVolume) * 20);
+        audioMixer.SetFloat("AmbientVolume", Mathf.Log(ambientVolume) * 20);
+		audioMixer.SetFloat("MusicVolume", Mathf.Log(musicVolume) * 20);
+		audioMixer.SetFloat("SFXVolume", Mathf.Log(sfxVolume) * 20);
         
         dangerAudioBaseLevel = dangerAudio.volume;
         dangerAudio.Play();

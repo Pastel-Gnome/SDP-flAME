@@ -261,7 +261,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9e5a7fac2461f894c8fde5fa775c9633, type: 3}
   - {fileID: 8300000, guid: f3fe71b21f35e194fa84f7a8ef85ec9f, type: 3}
   - {fileID: 8300000, guid: ee9b66f240d9e0941b93079a2a702fc8, type: 3}
-  releaseNoise: []
+  releaseNoise:
+  - {fileID: 8300000, guid: a871e7f65fd6ac84aa8d220c66a1f5c8, type: 3}
 --- !u!82 &7764718577755952922
 AudioSource:
   m_ObjectHideFlags: 0
@@ -515,6 +516,8 @@ MonoBehaviour:
   meshRenderer: {fileID: 5939478605353650694}
   affectedLights:
   - {fileID: 3549140285652779652}
+  affectedMechanicalLights: []
+  affectedLightStartValues: []
   colorA: {r: 0, g: 0, b: 0, a: 1}
   colorB: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &7414020129454266972

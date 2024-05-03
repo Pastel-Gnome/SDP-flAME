@@ -30,7 +30,7 @@ public class SaveManager : MonoBehaviour
 	float masterVolume = 0.7f;
 	float sfxVolume = 1f;
 	float ambientVolume = 1f;
-	[SerializeField] private AudioSource menuMusic;
+	float musicVolume = 1f;
 
 	private void Awake()
 	{
@@ -49,7 +49,6 @@ public class SaveManager : MonoBehaviour
 
 	void OnSceneLoaded(Scene currScene, LoadSceneMode loadMode)
 	{
-		StartCoroutine(SetMenuMusic(SceneManager.GetActiveScene().name == "Main Menu" ? 1 : 0, 1f));
 		SetupSceneData(currScene);
 	}
 
@@ -83,11 +82,13 @@ public class SaveManager : MonoBehaviour
 			holders = lightParent.GetChild(1).GetComponentsInChildren<Holder>();
 			checkpointParent = GameObject.Find("Checkpoints").transform;
 
-			masterVolume = PlayerPrefs.GetFloat("masterVol", 0.7f);
+			masterVolume = PlayerPrefs.GetFloat("masterVol", Mathf.Lerp(0.0001f, 1.2f, 0.7f));
 			sfxVolume = PlayerPrefs.GetFloat("sfxVol", 1f);
 			ambientVolume = PlayerPrefs.GetFloat("ambientVol", 1f);
+			musicVolume = PlayerPrefs.GetFloat("musicVol", 1f);
 			AudioManager.i.masterVolume = masterVolume;
-			AudioManager.i.ambienceVolume = ambientVolume;
+			AudioManager.i.musicVolume = musicVolume;
+			AudioManager.i.ambientVolume = ambientVolume;
 			AudioManager.i.sfxVolume = sfxVolume;
 
 			Holdable[] holdables = FindObjectsByType<Holdable>(FindObjectsSortMode.None);
@@ -155,10 +156,11 @@ public class SaveManager : MonoBehaviour
 						Holder dataHolder;
 						if (saveData.lanternData[i].holderIndex == -19) // if held by the player
 						{
+							Debug.Log("Spawn in player's arms");
 							dataHolder = instance.player.GetComponent<Holder>();
 							pb.animator.SetBool("Carrying", true);
 							pb.animator.Play("Arms-Carry", 1);
-							pb.heldObject = instance.lanterns[i].holdable;
+							pb.heldObject = instance.lanterns[i].GetComponent<Holdable>();
 							playerHolding = true;
 						}
 						else // if held by a pedestal, holster, or otherwise not held by the player
@@ -311,15 +313,5 @@ public class SaveManager : MonoBehaviour
 		{
 			OpenScene();
 		}
-	}
-
-	public IEnumerator SetMenuMusic(float newVolume, float duration){
-		float startVolume = menuMusic.volume;
-		float timeElapsed = 0;
-		while(timeElapsed < duration){
-			timeElapsed += Time.deltaTime;
-			menuMusic.volume = Mathf.Lerp(startVolume, newVolume, timeElapsed/duration);
-		}
-		yield return new WaitForFixedUpdate();
 	}
 }

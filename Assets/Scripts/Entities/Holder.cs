@@ -37,7 +37,7 @@ public class Holder : PowerSource
     public void OnGrab(){
         holding = true;
 
-        if(grabNoise.Length > 0){
+        if(grabNoise.Length > 0 && audioSource){
             audioSource.PlayOneShot(grabNoise[Random.Range(0, grabNoise.Length)]);
         }
     }
@@ -45,7 +45,7 @@ public class Holder : PowerSource
     public void OnRelease(){
         holding = false;
 
-        if(releaseNoise.Length > 0){
+        if(releaseNoise.Length > 0 && audioSource){
             audioSource.PlayOneShot(releaseNoise[Random.Range(0, releaseNoise.Length)]);
         }
     }

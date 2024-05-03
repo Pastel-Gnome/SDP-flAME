@@ -149,7 +149,7 @@ public class PlayerBehaviour : MonoBehaviour
             Vector3 directionalInputs = orientation.forward * Input.GetAxisRaw("Vertical") + orientation.right * Input.GetAxisRaw("Horizontal");
             currentMagnitude = directionalInputs.magnitude > 0 ? Mathf.Lerp(currentMagnitude, directionalInputs.magnitude, 0.05f): Mathf.Lerp(currentMagnitude, directionalInputs.magnitude, 0.5f);
             currentMagnitude = currentMagnitude < 0.05f ? 0 : currentMagnitude;
-            print("current magnitude: " + currentMagnitude);
+            //print("current magnitude: " + currentMagnitude);
             movementInput = Vector3.Slerp(movementInput, directionalInputs, 0.25f).normalized * currentMagnitude;
         }
 
